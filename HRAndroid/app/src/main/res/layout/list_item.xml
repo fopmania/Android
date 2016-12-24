@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <ImageView
+        app:srcCompat="@drawable/fulltime24"
+        android:id="@+id/imgType"
+        android:layout_weight="0.02"
+        android:foregroundGravity="center_vertical"
+        android:layout_width="22dp"
+        android:layout_height="22dp" />
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:id="@+id/textView9"
+        android:layout_weight="0.02"
+        android:textSize="16sp"
+        android:layout_width="5dp" />
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_selector"
+        android:id="@+id/liName"
+        android:text="nm"
+        android:textSize="16sp"
+        android:layout_width="80dp"
+        android:textAlignment="center" />
+
+    <TextView
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/liAge"
+        android:layout_weight="0.02"
+        android:textSize="16sp"
+        android:textAlignment="center" />
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:id="@+id/liVal1"
+        android:layout_weight="0.02"
+        android:layout_width="0dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:id="@+id/liVal2"
+        android:layout_weight="0.02"
+        android:layout_width="0dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_height="wrap_content"
+        android:id="@+id/liPlate"
+        android:layout_weight="0.02"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:layout_width="110dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_height="wrap_content"
+        android:id="@+id/liMaker"
+        android:layout_weight="0.02"
+        android:textSize="16sp"
+        android:textAlignment="textStart"
+        android:layout_width="100dp" />
+
+</LinearLayout>
