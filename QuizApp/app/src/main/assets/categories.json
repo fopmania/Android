@@ -1,0 +1,15 @@
+{
+    "categories":[
+        {
+            "name": "meths",
+            "description": "Methemetics formula",
+            "image": "xxx.png"
+        },
+        {
+        "name": "sport",
+        "description": "Spots....",
+        "image": "xxx.png"
+        }
+    ]
+
+}

@@ -1,0 +1,124 @@
+{
+    "quiz":[
+        {
+            "question": "The Summer Olympics has been hosted by all of these cities, except:",
+            "image": "sports1.jpg",
+            "answer": "4",
+            "point":"1",
+            "options": [
+                "St. Louis, United States",
+                "Atlanta, United States",
+                "Los Angeles, United States",
+                "San Francisco, United States"
+            ]
+        },
+        {
+            "question": "In what sports would a player warm up in an area known as the bullpen?",
+            "image": "sports2.jpg",
+            "answer": "4",
+            "point":"1",
+            "options": [
+                "Swimming",
+                "Tennis",
+                "Golf",
+                "Baseball"
+            ]
+        },
+        {
+            "question": "In 1969, Boris Spassky became World Champion in what?",
+            "image": "sports3.jpg",
+            "answer": "1",
+            "point":"1",
+            "options": [
+                "Chess",
+                "Wrestling",
+                "Ice Hockey",
+                "High jump"
+            ]
+        },
+        {
+            "question": "Los Angeles Lakers is an American team in what sport?",
+            "image": "sports4.jpg",
+            "answer": "3",
+            "point":"1",    
+            "options": [
+                "American football",
+                "Baseball",
+                "Basketball",
+                "Hockey"
+            ]
+        },
+        {
+            "question": "The FIFA World Cup in men's soccer has been played 19 times since 1930. Which is the only country that has participated in every tournament?",
+            "image": "sports5.jpg",
+            "answer": "2",
+            "point":"1",
+            "options": [
+                "Argentina",
+                "Brazil",
+                "Germany",
+                "England"
+            ]
+        },
+        {
+            "question": "Babe Ruth was an American athlete active in which sport?",
+            "image": "sports6.jpg",
+            "answer": "1",
+            "point":"1",
+            "options": [
+                "Baseball",
+                "Basketball",
+                "Skating",
+                "Ice hockey"
+            ]
+        },
+        {
+            "question": "In what kind of game is the goal to reduce a fixed score, commonly 501 or 301, to zero?",
+            "image": "sports7.jpg",
+            "answer": "1",
+            "point":"1",
+            "options": [
+                "Snowboarding",
+                "Figure skating",
+                "Darts",
+                "Lacrosse"
+            ]
+        },
+        {
+            "question": "In which country was tennis player Steffi Graf born?",
+            "image": "sports8.jpg",
+            "answer": "1",
+            "point":"1",
+            "options": [
+                "Germany",
+                "United States",
+                "Czech Republic",
+                "Russia"
+            ]
+        },
+        {
+            "question": "Which American tournament is always held in Augusta, Georgia?",
+            "image": "sports9.jpg",
+            "answer": "2",
+            "point":"1",
+            "options": [
+                "Stanley Cup",
+                "US Masters",
+                "Rogers Cup",
+                "World Series"
+            ]
+        },
+        {
+            "question": "Paavo Nurmi was a middle- and long-distance runner from which country?",
+            "image": "sports10.jpg",
+            "answer": "2",
+            "point":"1",
+            "options": [
+                "Poland",
+                "Finland",
+                "Sweden",
+                "Australia"
+            ]
+        }
+    ]
+}

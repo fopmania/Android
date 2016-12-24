@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.fopman.mac.quizapp.MainActivity"
+    android:background="@drawable/repeat_bg">
+
+    <Button
+        android:text="HISTORY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="110dp"
+        android:onClick="onClickCategory1"
+        android:id="@+id/btCategory1"
+        android:background="@drawable/btnpurple"
+        android:textColor="#FFFFFFFF"
+        android:textStyle="normal|bold" />
+
+    <Button
+        android:text="SPORTS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btCategory1"
+        android:layout_alignStart="@+id/btCategory1"
+        android:layout_marginTop="39dp"
+        android:onClick="onClickCategory2"
+        android:id="@+id/btCategory2"
+        android:background="@drawable/btnpurple"
+        android:textColor="#FFFFFFFF"
+        android:textStyle="normal|bold" />
+
+    <Button
+        android:text="Topic3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btCategory2"
+        android:layout_alignStart="@+id/btCategory2"
+        android:layout_marginTop="35dp"
+        android:id="@+id/btCategory3"
+        android:visibility="invisible" />
+
+    <Button
+        android:text="Topic4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btCategory3"
+        android:layout_alignStart="@+id/btCategory3"
+        android:layout_marginTop="36dp"
+        android:id="@+id/btCategory4"
+        android:visibility="invisible" />
+
+    <TextView
+        android:text="Select Category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:id="@+id/textView"
+        android:textSize="24sp"
+        android:textAlignment="center"
+        android:background="@drawable/box_shape"
+        android:textColor="@color/colorAccent"
+        android:textStyle="normal|bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>

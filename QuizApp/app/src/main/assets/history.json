@@ -1,0 +1,124 @@
+{
+    "quiz":[
+        {
+            "question": "What did the British passenger ship Titanic hit, causing it to sink?",
+            "image": "history1.jpg",
+            "answer": "4",
+            "point":"1",
+            "options": [
+                "A white whale",
+                "A submarine",
+                "Volcanic rocks",
+                "An Iceberg"
+            ]
+        },
+        {
+            "question": "The British rule over India ended in what year?",
+            "image": "history2.jpg",
+            "answer": "1",
+            "point":"1",
+            "options": [
+                "1947",
+                "1962",
+                "1950",
+                "1936"
+            ]
+        },
+        {
+            "question": "What nationality was the explorer James Cook?",
+            "image": "history3.jpg",
+            "answer": "1",
+            "point":"1",
+            "options": [
+                "British",
+                "Dutch",
+                "Australian",
+                "American"
+            ]
+        },
+        {
+            "question": "Who was President of Cuba during the Cuban Revolution (1953-1959)?",
+            "image": "history4.jpg",
+            "answer": "1",
+            "point":"1",
+            "options": [
+                "Fulgencio Batista",
+                "Che Guevara",
+                "Camilo Cienfuegos",
+                "Fidel Castro"
+            ]
+        },
+        {
+            "question": "Which spacecraft exploded on take-off in January 1986?",
+            "image": "history5.jpg",
+            "answer": "1",
+            "point":"1",
+            "options": [
+                "Challenger",
+                "Enterprise",
+                "Mercury",
+                "Discovery"
+            ]
+        },
+        {
+            "question": "In 1995, terrorists attacked the Tokyo subway, using a deadly gas. What is the name of the gas?",
+            "image": "history6.jpg",
+            "answer": "4",
+            "point":"1",
+            "options": [
+                "Cyanogen chloride",
+                "Tabun",
+                "Cyanide",
+                "Sarin"
+            ]
+        },
+        {
+            "question": "What did United Kingdom hand over to the People's Republic of China in 1997?",
+            "image": "history7.jpg",
+            "answer": "3",
+            "point":"1",
+            "options": [
+                "Basra",
+                "Singapore",
+                "Hong Kong",
+                "Macau"
+            ]
+        },
+        {
+            "question": "Who was the first female Prime Minister of Australia?",
+            "image": "history8.jpg",
+            "answer": "1",
+            "point":"1",
+            "options": [
+                "Julia Gillard",
+                "Fiona Scott",
+                "Tanya Plibersek",
+                "Julie Bishop"
+            ]
+        },
+        {
+            "question": "Who was the U.S. President behind the New Deal reform program that would end the Depression?",
+            "image": "history9.jpg",
+            "answer": "4",
+            "point":"1",
+            "options": [
+                "Calvin Coolidge",
+                "Woodrow Wilson",
+                "Harry S. Truman",
+                "Franklin D. Roosevelt"
+            ]
+        },
+        {
+            "question": "World War I began in which year?",
+            "image": "history10.jpg",
+            "answer": "4",
+            "point":"1",
+            "options": [
+                "1923",
+                "1938",
+                "1917",
+                "1914"
+            ]
+        }
+    ]
+}
