@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickSend(View view) {
         if(thConnect != null){
+            bufMsg[0] = cmd_text;
             thConnect.write(cmd_text, txtMessage.getText().toString());
         }
     }
@@ -311,6 +312,7 @@ public class MainActivity extends AppCompatActivity {
             for(int i = 0; i < data.length; i++){
                 bufMsg[i+1] = data[i];
             }
+            bufMsg[data.length+1] = '\0';
             try {
                 mmOutStream.write(bufMsg);
             } catch (IOException e) { }
