@@ -11,15 +11,18 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -122,21 +125,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickSend(View view) {
         if(thConnect != null){
-            bufMsg[0] = cmd_text;
+            Toast.makeText(getApplicationContext(), "Send "+ txtMessage.getText().toString(), Toast.LENGTH_LONG ).show();
             thConnect.write(cmd_text, txtMessage.getText().toString());
         }
     }
 
     public void onClickBright(View view) {
         if(thConnect != null){
-            bufMsg[0] = cmd_bright;
+            Toast.makeText(getApplicationContext(), "Bright : "+ sbBright.getProgress(), Toast.LENGTH_LONG ).show();
             thConnect.write(cmd_bright, Integer.toString(sbBright.getProgress()));
         }
     }
 
     public void onClickSpeed(View view) {
         if(thConnect != null){
-            bufMsg[0] = cmd_speed;
+            Toast.makeText(getApplicationContext(), "Speed : "+ sbSpeed.getProgress(), Toast.LENGTH_LONG ).show();
             thConnect.write(cmd_speed, Integer.toString(sbSpeed.getProgress()));
         }
     }
@@ -309,15 +312,18 @@ public class MainActivity extends AppCompatActivity {
         /* Call this from the main activity to send data to the remote device */
         public void write(byte cmd, String Msg) {
             byte [] data = Msg.getBytes();
+            bufMsg[0] = cmd;
+            if(((CheckBox)findViewById(R.id.ckSound)).isChecked())  bufMsg[1] = '1';
+                else    bufMsg[1] = '0';
+            Log.d("BT_MSG", Integer.toString(bufMsg[1]));
             for(int i = 0; i < data.length; i++){
-                bufMsg[i+1] = data[i];
+                bufMsg[i+2] = data[i];
             }
-            bufMsg[data.length+1] = '\0';
+            bufMsg[data.length+2] = 0;
             try {
                 mmOutStream.write(bufMsg);
             } catch (IOException e) { }
 
-            Toast.makeText(getApplicationContext(), "send "+ Msg, Toast.LENGTH_LONG ).show();
 
             delayButtons();
         }
