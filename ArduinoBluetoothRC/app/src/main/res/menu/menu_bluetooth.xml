@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuBTRating"
+        android:title="@string/Rating_name" />
+    <item
+        android:id="@+id/menuBTScan"
+        android:title="@string/BTScan" />
+    <item
+        android:id="@+id/menuBTAbout"
+        android:title="@string/version_name" />
+</menu>

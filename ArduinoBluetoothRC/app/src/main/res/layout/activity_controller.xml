@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".ControllerActivity">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar"></include>
+
+    <ImageButton
+        android:id="@+id/btUp"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="28dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/bt_dir"
+        android:rotation="-90"
+        android:background="@android:color/transparent"
+        android:onClick="onClickUp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+
+
+
+    <ImageButton
+        android:id="@+id/btLeft"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
+        android:background="@android:color/transparent"
+        android:rotation="180"
+        android:scaleType="centerInside"
+        android:src="@drawable/bt_dir"
+        android:onClick="onClickLeft"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btUp" />
+
+    <ImageButton
+        android:id="@+id/btDown"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="80dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/bt_dir"
+        android:rotation="90"
+        android:background="@android:color/transparent"
+        android:onClick="onClickDown"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btUp" />
+
+    <ImageButton
+        android:id="@+id/btRight"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="12dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/bt_dir"
+        android:background="@android:color/transparent"
+        android:onClick="onClickRight"
+        app:layout_constraintStart_toEndOf="@+id/btLeft"
+        app:layout_constraintTop_toBottomOf="@+id/btUp" />
+
+    <ImageButton
+        android:id="@+id/btT"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="108dp"
+        android:layout_marginTop="28dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:src="@drawable/bt_triangle"
+        android:onClick="onClickT"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+
+    <ImageButton
+        android:id="@+id/btS"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="centerInside"
+        android:layout_marginEnd="104dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/bt_sqare"
+        android:background="@android:color/transparent"
+        android:onClick="onClickS"
+        app:layout_constraintEnd_toStartOf="@+id/btO"
+        app:layout_constraintTop_toBottomOf="@+id/btT" />
+
+    <ImageButton
+        android:id="@+id/btO"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:src="@drawable/bt_circle"
+        android:onClick="onClickO"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btT" />
+
+    <ImageButton
+        android:id="@+id/btX"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="108dp"
+        android:layout_marginTop="68dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:src="@drawable/bt_cross"
+        android:onClick="onClickX"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btT" />
+
+    <ImageButton
+        android:id="@+id/btSelect"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="centerInside"
+        android:layout_marginBottom="36dp"
+        android:layout_marginStart="208dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/bt_cross"
+        android:background="@android:color/transparent"
+        android:onClick="onClickSelect"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btDown"
+        app:layout_constraintVertical_bias="0.79" />
+
+    <ImageButton
+        android:id="@+id/btStart"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="centerInside"
+        android:layout_marginBottom="44dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/bt_circle"
+        android:background="@android:color/transparent"
+        android:onClick="onClickStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.266"
+        app:layout_constraintStart_toEndOf="@+id/btSelect"
+        app:layout_constraintTop_toBottomOf="@+id/btX"
+        app:layout_constraintVertical_bias="1.0" />
+
+</android.support.constraint.ConstraintLayout>
