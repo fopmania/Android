@@ -5,5 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ControllerSettingActivity">
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar"
+        >
+
+    </include>
 
 </android.support.constraint.ConstraintLayout>
