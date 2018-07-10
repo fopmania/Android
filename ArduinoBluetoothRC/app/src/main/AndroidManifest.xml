@@ -35,16 +35,20 @@
         </activity>
         <activity
             android:name=".TerminalActivity"
-            android:parentActivityName=".ModeActivity"></activity>
+            android:parentActivityName=".ModeActivity">
+        </activity>
         <activity
             android:name=".ControllerActivity"
-            android:parentActivityName=".ModeActivity"></activity>
+            android:parentActivityName=".ModeActivity">
+        </activity>
         <activity
             android:name=".DimmerActivity"
-            android:parentActivityName=".ModeActivity"></activity>
+            android:parentActivityName=".ModeActivity">
+        </activity>
         <activity
             android:name=".SwitchActivity"
-            android:parentActivityName=".ModeActivity"></activity>
+            android:parentActivityName=".ModeActivity">
+        </activity>
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"

@@ -16,9 +16,11 @@ public class ControllerSettingActivity extends AppCompatActivity {
         setSupportActionBar(tbar);
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+        ab.setIcon(R.drawable.bt_left);
+        setTitle("Controller Setting");
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 }

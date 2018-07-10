@@ -6,5 +6,16 @@
     <string name="version_name">ABRC v1.0</string>
     <string name="BTScan">Scan</string>
 
+    <string name="controller_preference_name">Controller preferences</string>
+    <string name="key_down">Key Down</string>
+    <string name="key_up">Key Up</string>
+    <string name="key_Left">Key Left</string>
+    <string name="key_Right">Key Right</string>
+    <string name="key_X">Key X</string>
+    <string name="key_O">Key O</string>
+    <string name="key_T">Key T</string>
+    <string name="key_Q">Key Q</string>
+    <string name="key_Select">Key Select</string>
+    <string name="key_Start">Key Start</string>
 
 </resources>

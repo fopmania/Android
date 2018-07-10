@@ -14,61 +14,68 @@
         android:id="@+id/app_bar"
         layout="@layout/app_bar"></include>
 
-    <Button
+    <ImageButton
         android:id="@+id/btController"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="76dp"
-        android:text="Controller"
+        android:layout_marginTop="80dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/bt_circle"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btTerminal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Terminal"
+        android:scaleType="centerInside"
+        android:src="@drawable/bt_sqare"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btDimmer" />
+        app:layout_constraintTop_toBottomOf="@+id/btDimmer"
+        app:layout_constraintVertical_bias="0.372" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="24dp"
         android:onClick="onClickSwitch"
-        android:text="SWITCH"
+        android:scaleType="centerInside"
+        android:src="@drawable/bt_cross"
+        android:text="Controller"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btController"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/btController" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btDimmer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="24dp"
         android:onClick="onClickDimmer"
-        android:text="DIMMER"
+        android:scaleType="centerInside"
+        android:src="@drawable/bt_triangle"
+        android:text="Controller"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btSwitch"
-         />
+        app:layout_constraintTop_toBottomOf="@+id/btSwitch" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adViewMode"

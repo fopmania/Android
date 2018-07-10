@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context=".DimmerActivity">
 
     <include
@@ -12,11 +13,25 @@
         layout="@layout/app_bar"
         />
 
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adViewMode"
+        android:layout_width="300dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+
     <SeekBar
-        android:id="@+id/seekBar"
+        android:id="@+id/sbDimmer"
         style="@style/Widget.AppCompat.SeekBar"
-        android:layout_width="194dp"
-        android:layout_height="28dp"
+        android:layout_width="176dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -24,22 +39,25 @@
         android:max="100"
         android:progress="50"
         android:rotation="-90"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+        app:layout_constraintTop_toBottomOf="@+id/cbVertical"
+        app:layout_constraintVertical_bias="0.336" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/cbVertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:checked="true"
         android:text="Vercital"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/adViewMode" />
 </android.support.constraint.ConstraintLayout>

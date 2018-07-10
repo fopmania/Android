@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -27,7 +28,7 @@ public class ModeActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
-        Button btTerminal = (Button)findViewById(R.id.btTerminal);
+        ImageButton btTerminal = (ImageButton)findViewById(R.id.btTerminal);
         btTerminal.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -37,7 +38,7 @@ public class ModeActivity extends AppCompatActivity {
             }
         });
 
-        Button btController = (Button)findViewById(R.id.btController);
+        ImageButton btController = (ImageButton)findViewById(R.id.btController);
         btController.setOnClickListener( new View.OnClickListener(){
 
             @Override

@@ -1,7 +1,10 @@
 package mugdog.com.arduinobluetoothrc;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -12,12 +15,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
+import java.io.IOException;
 
 public class ControllerActivity extends AppCompatActivity {
 
+    BluetoothActivity activityBT;
+
     Vibrator    vib;
     private final int vib_time = 50;
+
+    String keyUp = "u", keyDown = "d", keyLeft = "l", keyRight = "r",
+            keyX = "x", keyO = "o", keyT = "t", keyQ = "q", keyStart = "s", keySelect = "e";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +45,79 @@ public class ControllerActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         vib = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+
+        makeTouchEvent(R.id.btDown);
+        makeTouchEvent(R.id.btUp);
+        makeTouchEvent(R.id.btLeft);
+        makeTouchEvent(R.id.btRight);
+        makeTouchEvent(R.id.btT);
+        makeTouchEvent(R.id.btO);
+        makeTouchEvent(R.id.btQ);
+        makeTouchEvent(R.id.btX);
+        makeTouchEvent(R.id.btSelect);
+        makeTouchEvent(R.id.btStart);
+
+        activityBT = BluetoothActivity.getInstance();
+        activityBT.setReadBT(null);
+
+        readKeySettings();
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void makeTouchEvent(int id) {
+        ImageButton bt = (ImageButton)findViewById(id);
+        bt.setOnTouchListener(new View.OnTouchListener() {
+              @Override
+              public boolean onTouch(View v, MotionEvent event) {
+                  int id = v.getId();
+                  try{
+                      switch(event.getAction()){
+                          case MotionEvent.ACTION_DOWN:
+                              vib.vibrate(vib_time);
+                              if(R.id.btDown == id){
+                                  activityBT.sendBT(keyDown);
+                              }
+                              else if(R.id.btUp == id){
+                                  activityBT.sendBT(keyUp);
+                              }
+                              else if(R.id.btLeft == id){
+                                  activityBT.sendBT(keyLeft);
+                              }
+                              else if(R.id.btRight == id){
+                                  activityBT.sendBT(keyRight);
+                              }
+                              else if(R.id.btT == id){
+                                  activityBT.sendBT(keyT);
+                              }
+                              else if(R.id.btO == id){
+                                  activityBT.sendBT(keyO);
+                              }
+                              else if(R.id.btQ == id){
+                                  activityBT.sendBT(keyQ);
+                              }
+                              else if(R.id.btX == id){
+                                  activityBT.sendBT(keyX);
+                              }
+                              else if(R.id.btSelect == id){
+                                  activityBT.sendBT(keySelect);
+                              }
+                              else if(R.id.btStart == id){
+                                  activityBT.sendBT(keyStart);
+                              }
+
+                              return true;
+                          case MotionEvent.ACTION_UP:
+                              activityBT.sendBT("0");
+                              return false;
+
+                      }
+                  }catch (IOException e) {
+                      e.printStackTrace();
+                  }
+                  return false;
+              }
+          }
+        );
     }
 
     @Override
@@ -67,43 +154,40 @@ public class ControllerActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onClickUp(View view) {
-        vib.vibrate(vib_time);
-    }
 
-    public void onClickLeft(View view) {
-        vib.vibrate(vib_time);
-    }
+    private void readKeySettings(){
+        Resources rc = getResources();
 
-    public void onClickDown(View view) {
-        vib.vibrate(vib_time);
-    }
+        SharedPreferences spf = getSharedPreferences( rc.getString(R.string.key_down), MODE_PRIVATE);
 
-    public void onClickRight(View view) {
-        vib.vibrate(vib_time);
+        keyDown = spf.getString(rc.getString(R.string.key_down), "d");
+        keyUp = spf.getString(rc.getString(R.string.key_up), "u");
+        keyLeft = spf.getString(rc.getString(R.string.key_Left), "l");
+        keyRight = spf.getString(rc.getString(R.string.key_Right), "r");
+        keyX = spf.getString(rc.getString(R.string.key_X), "x");
+        keyO = spf.getString(rc.getString(R.string.key_O), "o");
+        keyT = spf.getString(rc.getString(R.string.key_T), "t");
+        keyQ = spf.getString(rc.getString(R.string.key_Q), "q");
+        keySelect = spf.getString(rc.getString(R.string.key_Select), "e");
+        keyStart = spf.getString(rc.getString(R.string.key_Start), "s");
     }
+    private void storeKeySettings(){
+        Resources rc = getResources();
 
-    public void onClickT(View view) {
-        vib.vibrate(vib_time);
-    }
+        SharedPreferences spf = getSharedPreferences( rc.getString(R.string.key_down), MODE_PRIVATE);
 
-    public void onClickS(View view) {
-        vib.vibrate(vib_time);
-    }
 
-    public void onClickO(View view) {
-        vib.vibrate(vib_time);
-    }
+        spf.edit().putString(rc.getString(R.string.key_down), keyDown).commit();
+        spf.edit().putString(rc.getString(R.string.key_up), keyUp).commit();
+        spf.edit().putString(rc.getString(R.string.key_Left), keyLeft).commit();
+        spf.edit().putString(rc.getString(R.string.key_Right), keyRight).commit();
+        spf.edit().putString(rc.getString(R.string.key_X), keyX).commit();
+        spf.edit().putString(rc.getString(R.string.key_O), keyO).commit();
+        spf.edit().putString(rc.getString(R.string.key_T), keyT).commit();
+        spf.edit().putString(rc.getString(R.string.key_Q), keyQ).commit();
+        spf.edit().putString(rc.getString(R.string.key_Select), keySelect).commit();
+        spf.edit().putString(rc.getString(R.string.key_Start), keyStart).commit();
 
-    public void onClickX(View view) {
-        vib.vibrate(vib_time);
-    }
-
-    public void onClickSelect(View view) {
-        vib.vibrate(vib_time);
-    }
-
-    public void onClickStart(View view) {
-        vib.vibrate(vib_time);
+        spf.edit().commit();
     }
 }

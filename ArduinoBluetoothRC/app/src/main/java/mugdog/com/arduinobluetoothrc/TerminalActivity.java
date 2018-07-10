@@ -1,6 +1,7 @@
 package mugdog.com.arduinobluetoothrc;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -76,6 +77,8 @@ public class TerminalActivity extends AppCompatActivity {
         });
 
         activityBT.setReadBT(etMonitor);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     @Override
