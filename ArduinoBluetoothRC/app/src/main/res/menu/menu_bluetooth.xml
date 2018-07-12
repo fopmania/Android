@@ -9,6 +9,9 @@
         android:id="@+id/menuBTScan"
         android:title="@string/BTScan" />
     <item
+        android:id="@+id/menuBTVirtual"
+        android:title="Virtual BT" />
+    <item
         android:id="@+id/menuBTAbout"
         android:title="@string/version_name" />
 </menu>

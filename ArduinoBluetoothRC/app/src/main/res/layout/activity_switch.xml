@@ -18,12 +18,13 @@
         android:layout_height="42dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         ads:adSize="SMART_BANNER"
         ads:adUnitId="@string/banner_ad_unit_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="72dp" />
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
     <Switch
         android:id="@+id/swButton"

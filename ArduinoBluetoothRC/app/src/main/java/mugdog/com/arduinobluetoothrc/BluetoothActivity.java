@@ -8,11 +8,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PersistableBundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -40,6 +43,8 @@ import java.util.UUID;
 
 public class BluetoothActivity extends AppCompatActivity {
 
+    public boolean isVirtual = false;
+
     private BluetoothAdapter        BTAdapter;
     private BluetoothSocket         BTSocket = null;
     private Set<BluetoothDevice>    BTDevices;
@@ -62,13 +67,23 @@ public class BluetoothActivity extends AppCompatActivity {
     public static BluetoothActivity getInstance()   {   return _instance;    }
 
     public void sendBT(String msg) throws IOException {
+        if(isVirtual)   return;
         BTThread.write(msg);
+    }
+    public void sendBT(byte ch) throws IOException {
+        if(isVirtual)   return;
+        BTThread.write(ch);
     }
 
     public void setReadBT(EditText et){
+        if(isVirtual)   return;
         sHandle.setEditText(et);
     }
-    public void destroyBTThread() throws IOException {   BTThread.closeSocket(); }
+    public void destroyBTThread() throws IOException
+    {
+        if(isVirtual)   return;
+        BTThread.closeSocket();
+    }
 
 
     @SuppressLint("HandlerLeak")
@@ -117,7 +132,7 @@ public class BluetoothActivity extends AppCompatActivity {
             final String addr = info.substring(info.length() - 17);
             final String name = info.substring(0, info.length() - 17);
 
-            Thread th = new Thread(){
+            final Thread th = new Thread(){
                 @Override
                 public void run() {
                     boolean fail = false;
@@ -132,6 +147,7 @@ public class BluetoothActivity extends AppCompatActivity {
                         BTSocket.connect();
                     } catch (IOException e) {
                         fail = true;
+                        pBarHandler.sendMessage(pBarHandler.obtainMessage());
                         try {
                             BTSocket.close();
                             sHandle.obtainMessage(junBluetooth.CONNECTING_STATUS, -1, -1 ).sendToTarget();
@@ -149,10 +165,44 @@ public class BluetoothActivity extends AppCompatActivity {
                         startActivity(it);
                         //finish();
                         pBarHandler.sendMessage(pBarHandler.obtainMessage());
+                        isVirtual = false;
                     }
                 }
             };
             th.start();
+
+            new CountDownTimer(20000, 1000){
+                boolean isExit = false;
+                @Override
+                public void onTick(long millisUntilFinished) {
+//                    if(!BTAdapter.isEnabled()){
+//                        try {
+//                            Toast.makeText(getBaseContext(), "Bluetooth connection failed.", Toast.LENGTH_SHORT).show();
+//                            th.interrupt();
+//                            BTSocket.close();
+//                            sHandle.obtainMessage(junBluetooth.CONNECTING_STATUS, -1, -1 ).sendToTarget();
+//                            isExit = true;
+//                            pBarHandler.sendMessage(pBarHandler.obtainMessage());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+                }
+
+                @Override
+                public void onFinish() {
+                    if(isExit || (BTThread != null && BTThread.isAlive()))      return;
+                    try {
+                        Toast.makeText(getBaseContext(), "Bluetooth connection failed.", Toast.LENGTH_SHORT).show();
+                        th.interrupt();
+                        BTSocket.close();
+                        sHandle.obtainMessage(junBluetooth.CONNECTING_STATUS, -1, -1 ).sendToTarget();
+                        pBarHandler.sendMessage(pBarHandler.obtainMessage());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
         }
     };
 
@@ -163,6 +213,10 @@ public class BluetoothActivity extends AppCompatActivity {
 
         Toolbar tbar = (Toolbar)findViewById(R.id.app_bar);
         setSupportActionBar(tbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setIcon(R.mipmap.ic_launcher2);
+
+
 
         //ca-app-pub-2239158288105225/7625810987
         MobileAds.initialize(this, "ca-app-pub-2239158288105225~6675266363");
@@ -210,7 +264,27 @@ public class BluetoothActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         BluetoothActivity._instance = this;
+
+        // check install
+
+        SharedPreferences sp = getSharedPreferences("Shortcut", MODE_PRIVATE);
+        if(sp.getString("isShortcut", "").isEmpty())
+        {
+            Intent target = new Intent(getApplicationContext(), BluetoothActivity.class);
+
+            Intent shout = new Intent();
+            shout.putExtra(Intent.EXTRA_SHORTCUT_INTENT, target);
+            shout.putExtra(Intent.EXTRA_SHORTCUT_NAME, getResources().getString(R.string.app_name));
+            shout.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                    Intent.ShortcutIconResource.fromContext(getApplicationContext(), R.mipmap.ic_launcher) );
+            shout.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+            getApplicationContext().sendBroadcast(shout);
+
+            sp.edit().putString("isShortcut", "exist").commit();
+        }
+
     }
+
 
     public void setBTAdapter(){
         if(!BTAdapter.isEnabled()){
@@ -249,14 +323,14 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
     void findBluetoothDevices(){
-        if(!BTAdapter.isEnabled())      return;
+        if(BTAdapter == null || !BTAdapter.isEnabled())      return;
 
         BTAdapter.startDiscovery();
         registerReceiver(brReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
     }
 
     void updateBTDevices(){
-        if(!BTAdapter.isEnabled())      return;
+        if(BTAdapter == null || !BTAdapter.isEnabled())      return;
         BTArrayAdapter.clear();
 
         BTDevices = BTAdapter.getBondedDevices();
@@ -268,12 +342,14 @@ public class BluetoothActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(brReceiver);
-        try {
-            if(BTThread != null)
-                BTThread.closeSocket();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(isVirtual == false){
+            unregisterReceiver(brReceiver);
+            try {
+                if(BTThread != null)
+                    BTThread.closeSocket();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         super.onDestroy();
     }
@@ -300,6 +376,13 @@ public class BluetoothActivity extends AppCompatActivity {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                 }
                 break;
+
+            case R.id.menuBTVirtual:
+                isVirtual = true;
+                Intent it = new Intent(this, ModeActivity.class);
+                startActivity(it);
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }

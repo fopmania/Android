@@ -43,8 +43,9 @@ public class junBluetooth {
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                    if(etMsg != null && readMessage != null)
-                        etMsg.append(readMessage + "\n");
+                    if(etMsg != null && readMessage != null){
+                        etMsg.append("< "+readMessage + "\n");
+                    }
                     break;
                 case CONNECTING_STATUS:
                     if(msg.arg1 == 1){
@@ -99,6 +100,9 @@ public class junBluetooth {
 
         public void write(String Msg) throws IOException {
             outStream.write(Msg.getBytes());
+        }
+        public void write(byte Msg) throws IOException {
+            outStream.write(Msg);
         }
 
         public void closeSocket() throws IOException {

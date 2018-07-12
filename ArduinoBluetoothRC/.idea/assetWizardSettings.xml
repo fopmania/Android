@@ -13,6 +13,19 @@
                       <PersistentState>
                         <option name="children">
                           <map>
+                            <entry key="actionbar">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/png/icon_controller.png" />
+                                      <entry key="outputName" value="ic_action_controller" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
                             <entry key="launcher">
                               <value>
                                 <PersistentState>
@@ -34,16 +47,35 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundColor" value="ffffff" />
                                       <entry key="backgroundLayerName" value="ic_launcher_background" />
-                                      <entry key="foregroundImage" value="$PROJECT_DIR$/../ArduinoBluetoothRC.png" />
-                                      <entry key="foregroundLayerName" value="ic_launcher_foreground" />
+                                      <entry key="foregroundImage" value="$PROJECT_DIR$/png/icon_controller.png" />
+                                      <entry key="foregroundLayerName" value="ic_controller" />
                                       <entry key="outputName" value="ic_launcher1" />
                                     </map>
                                   </option>
                                 </PersistentState>
                               </value>
                             </entry>
+                            <entry key="launcherLegacy">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="iconShape" value="NONE" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/png/ABRC128.png" />
+                                      <entry key="outputName" value="ic_launcher2" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
                           </map>
                         </option>
                       </PersistentState>

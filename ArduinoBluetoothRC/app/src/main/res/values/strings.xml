@@ -18,4 +18,8 @@
     <string name="key_Select">Key Select</string>
     <string name="key_Start">Key Start</string>
 
+    <string name="dimmer_preference_name">Dimmer preferences</string>
+    <string name="vertical">vertical</string>
+    <string name="hexa_byte">hexabyte</string>
+
 </resources>

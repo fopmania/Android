@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,7 +27,6 @@ public class TerminalActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        activityBT = BluetoothActivity.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terminal);
 
@@ -35,9 +35,15 @@ public class TerminalActivity extends AppCompatActivity {
 
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+        ab.setIcon(R.mipmap.ic_terminal);
+        setTitle("Terminal");
 
         txtCmd = (EditText)findViewById(R.id.txtCmd);
         etMonitor = (EditText)findViewById(R.id.etMonitor);
+        etMonitor.setVerticalScrollBarEnabled(true);
+        //  add scrollbar in Monitor EditText
+        etMonitor.setMovementMethod(new ScrollingMovementMethod());
+
 
 //        btSend.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -61,7 +67,7 @@ public class TerminalActivity extends AppCompatActivity {
                 if(actionId == EditorInfo.IME_ACTION_DONE){
                     if(txtCmd.getText().length() > 0){
                         String msg = txtCmd.getText().toString();
-                        etMonitor.append(msg+"\n");
+                        etMonitor.append("> "+ msg+"\n");
                         txtCmd.setText("");
                         try {
                             activityBT.sendBT(msg);
@@ -76,6 +82,22 @@ public class TerminalActivity extends AppCompatActivity {
             }
         });
 
+//        ShapeDrawable shape = new ShapeDrawable(new RectShape());
+//        shape.getPaint().setColor(Color.DKGRAY);
+//        shape.getPaint().setStyle(Paint.Style.STROKE);
+//        shape.getPaint().setStrokeWidth(3);
+//        etMonitor.setBackground(shape);
+//
+//        ShapeDrawable shape2 = new ShapeDrawable(new RectShape());
+//        shape2.getPaint().setColor(Color.LTGRAY);
+//        shape2.getPaint().setStyle(Paint.Style.STROKE);
+//        shape2.getPaint().setStrokeWidth(3);
+//        txtCmd.setBackground(shape2);
+
+
+
+
+        activityBT = BluetoothActivity.getInstance();
         activityBT.setReadBT(etMonitor);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

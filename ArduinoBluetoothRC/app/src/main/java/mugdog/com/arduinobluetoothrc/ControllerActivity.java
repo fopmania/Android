@@ -27,20 +27,30 @@ public class ControllerActivity extends AppCompatActivity {
 
     BluetoothActivity activityBT;
 
+    static ControllerActivity _instance = null;
+
     Vibrator    vib;
     private final int vib_time = 50;
 
-    String keyUp = "u", keyDown = "d", keyLeft = "l", keyRight = "r",
+    public String keyUp = "u", keyDown = "d", keyLeft = "l", keyRight = "r",
             keyX = "x", keyO = "o", keyT = "t", keyQ = "q", keyStart = "s", keySelect = "e";
+
+    static public ControllerActivity getInstance()  {   return  _instance;  }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_controller);
+
+        ControllerActivity._instance = this;
+
         Toolbar tbar = (Toolbar)findViewById(R.id.app_bar);
         setSupportActionBar(tbar);
+
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+        ab.setIcon(R.mipmap.ic_controller);
+        setTitle("Controller");
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -148,6 +158,7 @@ public class ControllerActivity extends AppCompatActivity {
             case R.id.menu_settins:
                 Intent it = new Intent(this, ControllerSettingActivity.class);
                 startActivity(it);
+
                 break;
 
         }
@@ -158,7 +169,7 @@ public class ControllerActivity extends AppCompatActivity {
     private void readKeySettings(){
         Resources rc = getResources();
 
-        SharedPreferences spf = getSharedPreferences( rc.getString(R.string.key_down), MODE_PRIVATE);
+        SharedPreferences spf = getSharedPreferences( rc.getString(R.string.controller_preference_name), MODE_PRIVATE);
 
         keyDown = spf.getString(rc.getString(R.string.key_down), "d");
         keyUp = spf.getString(rc.getString(R.string.key_up), "u");
@@ -171,23 +182,23 @@ public class ControllerActivity extends AppCompatActivity {
         keySelect = spf.getString(rc.getString(R.string.key_Select), "e");
         keyStart = spf.getString(rc.getString(R.string.key_Start), "s");
     }
-    private void storeKeySettings(){
+    public void storeKeySettings(){
         Resources rc = getResources();
 
-        SharedPreferences spf = getSharedPreferences( rc.getString(R.string.key_down), MODE_PRIVATE);
+        SharedPreferences spf = getSharedPreferences( rc.getString(R.string.controller_preference_name), MODE_PRIVATE);
 
+        SharedPreferences.Editor ed = spf.edit();
+        ed.putString(rc.getString(R.string.key_down), keyDown);
+        ed.putString(rc.getString(R.string.key_up), keyUp);
+        ed.putString(rc.getString(R.string.key_Left), keyLeft);
+        ed.putString(rc.getString(R.string.key_Right), keyRight);
+        ed.putString(rc.getString(R.string.key_X), keyX);
+        ed.putString(rc.getString(R.string.key_O), keyO);
+        ed.putString(rc.getString(R.string.key_T), keyT);
+        ed.putString(rc.getString(R.string.key_Q), keyQ);
+        ed.putString(rc.getString(R.string.key_Select), keySelect);
+        ed.putString(rc.getString(R.string.key_Start), keyStart);
 
-        spf.edit().putString(rc.getString(R.string.key_down), keyDown).commit();
-        spf.edit().putString(rc.getString(R.string.key_up), keyUp).commit();
-        spf.edit().putString(rc.getString(R.string.key_Left), keyLeft).commit();
-        spf.edit().putString(rc.getString(R.string.key_Right), keyRight).commit();
-        spf.edit().putString(rc.getString(R.string.key_X), keyX).commit();
-        spf.edit().putString(rc.getString(R.string.key_O), keyO).commit();
-        spf.edit().putString(rc.getString(R.string.key_T), keyT).commit();
-        spf.edit().putString(rc.getString(R.string.key_Q), keyQ).commit();
-        spf.edit().putString(rc.getString(R.string.key_Select), keySelect).commit();
-        spf.edit().putString(rc.getString(R.string.key_Start), keyStart).commit();
-
-        spf.edit().commit();
+        ed.commit();
     }
 }

@@ -8,4 +8,8 @@
     <color name="colorForeground">#9c9c9c</color>
     <color name="colorTextPrimary">#ffffff</color>
     <color name="colorMenu">#535353</color>
+    <color name="disable_thumb_grey">#1c000000</color>
+    <color name="enable_thumb_gray">#f1f1f1</color>
+    <color name="enable_thumb_green">#46bdbf</color>
+    <color name="colorMonitorText">#7adf75</color>
 </resources>

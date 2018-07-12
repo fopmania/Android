@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".ControllerSettingActivity">
-
     <include
         android:id="@+id/app_bar"
         layout="@layout/app_bar"
-        ></include>
+        >
+    </include>
+
 
     <ImageButton
         android:id="@+id/btUp2"
@@ -17,9 +19,9 @@
         android:layout_height="70dp"
         android:layout_marginStart="112dp"
         android:layout_marginTop="28dp"
+        android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_up"
-        android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
@@ -136,5 +138,205 @@
         app:layout_constraintStart_toEndOf="@+id/btSelect2"
         app:layout_constraintTop_toBottomOf="@+id/btX2"
         app:layout_constraintVertical_bias="0.974" />
+
+    <EditText
+        android:id="@+id/etUp"
+        android:layout_width="50dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="48dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/terminal_cmd"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:imeOptions="actionDone"
+        android:onClick="onClickEditText"
+        android:text="up"
+        android:textAlignment="center"
+        android:textColor="@color/colorMonitorText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/btUp2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/etRight"
+        android:layout_width="50dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="96dp"
+        android:background="@drawable/terminal_cmd"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:imeOptions="actionDone"
+        android:onClick="onClickEditText"
+        android:text="right"
+        android:textAlignment="center"
+        android:textColor="@color/colorMonitorText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+
+
+    <EditText
+        android:id="@+id/etDown"
+        android:layout_width="50dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="144dp"
+        android:background="@drawable/terminal_cmd"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:imeOptions="actionDone"
+        android:onClick="onClickEditText"
+        android:text="down"
+        android:textAlignment="center"
+        android:textColor="@color/colorMonitorText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+
+    <EditText
+        android:id="@+id/etLeft"
+        android:layout_width="50dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="96dp"
+        android:background="@drawable/terminal_cmd"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:imeOptions="actionDone"
+        android:onClick="onClickEditText"
+        android:text="left"
+        android:textAlignment="center"
+        android:textColor="@color/colorMonitorText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+
+    <EditText
+        android:id="@+id/etT"
+        android:layout_width="50dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="116dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/terminal_cmd"
+        android:ems="10"
+        android:imeOptions="actionDone"
+        android:inputType="textPersonName"
+        android:onClick="onClickEditText"
+        android:text="t"
+        android:textAlignment="center"
+        android:textColor="@color/colorMonitorText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+
+    <EditText
+        android:id="@+id/etX"
+        android:layout_width="50dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="116dp"
+        android:layout_marginTop="148dp"
+        android:background="@drawable/terminal_cmd"
+        android:ems="10"
+        android:imeOptions="actionDone"
+        android:inputType="textPersonName"
+        android:onClick="onClickEditText"
+        android:text="x"
+        android:textAlignment="center"
+        android:textColor="@color/colorMonitorText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+
+    <EditText
+        android:id="@+id/etQ"
+        android:layout_width="50dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="176dp"
+        android:layout_marginTop="96dp"
+        android:background="@drawable/terminal_cmd"
+        android:ems="10"
+        android:imeOptions="actionDone"
+        android:inputType="textPersonName"
+        android:onClick="onClickEditText"
+        android:text="q"
+        android:textAlignment="center"
+        android:textColor="@color/colorMonitorText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+
+    <EditText
+        android:id="@+id/etO"
+        android:layout_width="50dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginTop="96dp"
+        android:background="@drawable/terminal_cmd"
+        android:ems="10"
+        android:imeOptions="actionDone"
+        android:inputType="textPersonName"
+        android:onClick="onClickEditText"
+        android:text="o"
+        android:textAlignment="center"
+        android:textColor="@color/colorMonitorText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+
+    <EditText
+        android:id="@+id/etSelect"
+        android:layout_width="50dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/terminal_cmd"
+        android:ems="10"
+        android:imeOptions="actionDone"
+        android:inputType="textPersonName"
+        android:onClick="onClickEditText"
+        android:text="e"
+        android:textAlignment="center"
+        android:textColor="@color/colorMonitorText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/btSelect2"
+        app:layout_constraintEnd_toEndOf="@+id/btSelect2"
+        app:layout_constraintHorizontal_bias="0.083"
+        app:layout_constraintStart_toStartOf="@+id/btSelect2" />
+
+    <EditText
+        android:id="@+id/etStart"
+        android:layout_width="50dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/terminal_cmd"
+        android:ems="10"
+        android:imeOptions="actionDone"
+        android:inputType="textPersonName"
+        android:onClick="onClickEditText"
+        android:text="s"
+        android:textAlignment="center"
+        android:textColor="@color/colorMonitorText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/btStart2"
+        app:layout_constraintEnd_toEndOf="@+id/btStart2"
+        app:layout_constraintHorizontal_bias="0.583"
+        app:layout_constraintStart_toStartOf="@+id/btStart2" />
 
 </android.support.constraint.ConstraintLayout>

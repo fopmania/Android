@@ -10,9 +10,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 public class SwitchActivity extends AppCompatActivity {
     Switch swButton;
     TextView tvSwitchText;
+    BluetoothActivity activityBT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +26,8 @@ public class SwitchActivity extends AppCompatActivity {
 
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-
-        ab.setIcon(R.drawable.bt_left);
-        setTitle("SWITCH");
+        ab.setIcon(R.mipmap.ic_switch);
+        setTitle("Switch");
 
 
 
@@ -39,8 +41,15 @@ public class SwitchActivity extends AppCompatActivity {
                 if(isChecked){
                     chk = "1";
                     tvSwitchText.setText("On");
+                    tvSwitchText.setTextColor(getResources().getColor(R.color.enable_thumb_green));
                 }else{
                     tvSwitchText.setText("Off");
+                    tvSwitchText.setTextColor(getResources().getColor(R.color.enable_thumb_gray));
+                }
+                try{
+                    activityBT.sendBT(chk);
+                } catch (IOException e) {
+                        e.printStackTrace();
                 }
 
                 Toast.makeText(getBaseContext(), chk, Toast.LENGTH_SHORT).show();
@@ -49,6 +58,8 @@ public class SwitchActivity extends AppCompatActivity {
 
         tvSwitchText = (TextView)findViewById(R.id.tvSwitchText);
 
+        activityBT = BluetoothActivity.getInstance();
+        activityBT.setReadBT(null);
 
     }
 }
