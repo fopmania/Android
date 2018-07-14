@@ -1,23 +1,40 @@
 package mugdog.com.arduinobluetoothrc;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.io.IOException;
 
 public class DimmerActivity extends AppCompatActivity {
+    private AdView mAdView;
+
+    ConstraintLayout lyBack;
     CheckBox cbVertical, cbHexaByte;
     SeekBar sbDimmer;
     BluetoothActivity activityBT;
+    int colorBackground = Color.TRANSPARENT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +74,13 @@ public class DimmerActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     sbDimmer.setMax(100);
+                    sbDimmer.setProgress(50);
                 } else {
                     sbDimmer.setMax(9);
+                    sbDimmer.setProgress(5);
                 }
+                int cl = ColorUtil.lighten(colorBackground, (double)sbDimmer.getProgress()/sbDimmer.getMax());
+                lyBack.setBackgroundColor(cl);
                 Resources rc = getResources();
                 SharedPreferences spf = getSharedPreferences(rc.getString(R.string.dimmer_preference_name), MODE_PRIVATE);
                 spf.edit().putBoolean(rc.getString(R.string.hexa_byte), isChecked).commit();
@@ -75,6 +96,8 @@ public class DimmerActivity extends AppCompatActivity {
                     } else {
                         activityBT.sendBT(Integer.toString(progress));
                     }
+                    int cl = ColorUtil.lighten(colorBackground, (double)sbDimmer.getProgress()/sbDimmer.getMax());
+                    lyBack.setBackgroundColor(cl);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -87,18 +110,33 @@ public class DimmerActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 int v = sbDimmer.getProgress();
-                if(cbHexaByte.isChecked()){
-                    Toast.makeText(getBaseContext(), "0x" + Integer.toString(v), Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getBaseContext(), Integer.toString(v), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getBaseContext(), Integer.toString(v), Toast.LENGTH_SHORT).show();
+                Resources rc = getResources();
+                SharedPreferences spf = getSharedPreferences(rc.getString(R.string.dimmer_preference_name), MODE_PRIVATE);
+                spf.edit().putInt(rc.getString(R.string.progress), sbDimmer.getProgress()).commit();
             }
         });
 
         activityBT = BluetoothActivity.getInstance();
         activityBT.setReadBT(null);
 
+        lyBack = (ConstraintLayout)findViewById(R.id.lyDimmer);
+        if( lyBack.getBackground() instanceof ColorDrawable)
+        {
+            colorBackground = ((ColorDrawable)lyBack.getBackground()).getColor();
+        }
+        int cl = ColorUtil.lighten(colorBackground, (double)sbDimmer.getProgress()/sbDimmer.getMax());
+        lyBack.setBackgroundColor(cl);
+
+
+
         readSettings();
+
+        mAdView = findViewById(R.id.adViewDimmer);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("B4438B8CFE663D4402842E80C188748E")
+                .build();
+        mAdView.loadAd(adRequest);
 
     }
 
@@ -108,14 +146,38 @@ public class DimmerActivity extends AppCompatActivity {
         SharedPreferences spf = getSharedPreferences(rc.getString(R.string.dimmer_preference_name), MODE_PRIVATE);
         cbHexaByte.setChecked(spf.getBoolean(rc.getString(R.string.hexa_byte), false));
         cbVertical.setChecked(spf.getBoolean(rc.getString(R.string.vertical), true));
+        sbDimmer.setProgress(spf.getInt(rc.getString(R.string.progress), 5));
 
     }
 
     public void storeSettings() {
         Resources rc = getResources();
         SharedPreferences spf = getSharedPreferences(rc.getString(R.string.dimmer_preference_name), MODE_PRIVATE);
-        spf.edit().putBoolean(rc.getString(R.string.hexa_byte), cbHexaByte.isChecked());
-        spf.edit().putBoolean(rc.getString(R.string.vertical), cbVertical.isChecked());
-        spf.edit().commit();
+        spf.edit().putBoolean(rc.getString(R.string.hexa_byte), cbHexaByte.isChecked()).commit();
+        spf.edit().putBoolean(rc.getString(R.string.vertical), cbVertical.isChecked()).commit();
+        spf.edit().putInt(rc.getString(R.string.progress), sbDimmer.getProgress()).commit();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inf = getMenuInflater();
+        inf.inflate(R.menu.menu_nosetting, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.menu_rating:
+                final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

@@ -12,4 +12,5 @@
     <color name="enable_thumb_gray">#f1f1f1</color>
     <color name="enable_thumb_green">#46bdbf</color>
     <color name="colorMonitorText">#7adf75</color>
+    <color name="colorActionBar">#1a58ce</color>
 </resources>

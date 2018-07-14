@@ -51,13 +51,14 @@ public class ModeActivity extends AppCompatActivity {
             }
         });
 
-        MobileAds.initialize(this, "ca-app-pub-2239158288105225~6675266363");
 
         AdView adView = (AdView)findViewById(R.id.adViewMode);
         //adView.setAdSize(AdSize.BANNER);
         //adView.setAdUnitId("ca-app-pub-2239158288105225/7625810987");
 //        AdRequest adR = new AdRequest.Builder().addTestDevice("B4438B8CFE663D4402842E80C188748E").build();
-        AdRequest adR = new AdRequest.Builder().build();
+        AdRequest adR = new AdRequest.Builder()
+                .addTestDevice("B4438B8CFE663D4402842E80C188748E")
+                .build();
         adView.loadAd(adR);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

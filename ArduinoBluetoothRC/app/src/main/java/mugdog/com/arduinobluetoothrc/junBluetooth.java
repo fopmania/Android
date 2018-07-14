@@ -44,7 +44,7 @@ public class junBluetooth {
                         e.printStackTrace();
                     }
                     if(etMsg != null && readMessage != null){
-                        etMsg.append("< "+readMessage + "\n");
+                        etMsg.append("\n"+"< "+readMessage);
                     }
                     break;
                 case CONNECTING_STATUS:

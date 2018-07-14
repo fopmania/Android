@@ -10,7 +10,6 @@
     <include
         android:id="@+id/app_bar"
         layout="@layout/app_bar"
-        app:layout_constraintBottom_toTopOf="@+id/etMonitor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></include>
@@ -19,11 +18,10 @@
     <EditText
         android:id="@+id/txtCmd"
         android:layout_width="0dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
         android:enabled="true"
@@ -36,8 +34,8 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etMonitor"
         tools:layout_conversion_absoluteHeight="44dp"
         tools:layout_conversion_absoluteWidth="387dp" />
 
@@ -48,15 +46,18 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="70dp"
         android:background="@drawable/terminal_monitor"
         android:ems="10"
         android:enabled="false"
         android:inputType="textMultiLine"
-        android:paddingLeft="10dp"
-        android:scrollbars="vertical"
         android:overScrollMode="always"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
         android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
         android:textAlignment="viewStart"
         android:textColor="@color/colorMonitorText"
         android:textSize="18sp"
@@ -68,5 +69,21 @@
         tools:layout_conversion_absoluteHeight="522dp"
         tools:layout_conversion_absoluteWidth="387dp" />
 
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adViewTerminal"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id"
+        ads:layout_constraintBottom_toTopOf="@+id/etMonitor"
+        ads:layout_constraintHorizontal_bias="0.494"
+        ads:layout_constraintVertical_bias="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
 </android.support.constraint.ConstraintLayout>

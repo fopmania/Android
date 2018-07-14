@@ -18,7 +18,7 @@
         android:layout_width="50dp"
         android:layout_height="70dp"
         android:layout_marginStart="112dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="48dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_up"
@@ -65,7 +65,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginEnd="108dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="48dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_triangle"
@@ -110,34 +110,25 @@
         android:id="@+id/btSelect2"
         android:layout_width="90dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="36dp"
-        android:layout_marginStart="232dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="220dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_select"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btDown2"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/btStart2"
-        android:layout_width="90dp"
+        android:layout_width="87dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="36dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="220dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_start"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.109"
-        app:layout_constraintStart_toEndOf="@+id/btSelect2"
-        app:layout_constraintTop_toBottomOf="@+id/btX2"
-        app:layout_constraintVertical_bias="0.974" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/etUp"
@@ -145,11 +136,10 @@
         android:layout_height="29dp"
         android:layout_marginBottom="48dp"
         android:layout_marginStart="112dp"
-        android:layout_marginTop="8dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
-        android:inputType="textPersonName"
         android:imeOptions="actionDone"
+        android:inputType="textPersonName"
         android:onClick="onClickEditText"
         android:text="up"
         android:textAlignment="center"
@@ -158,19 +148,17 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/btUp2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/btUp2" />
 
     <EditText
         android:id="@+id/etRight"
         android:layout_width="50dp"
         android:layout_height="29dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginStart="168dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
-        android:inputType="textPersonName"
         android:imeOptions="actionDone"
+        android:inputType="textPersonName"
         android:onClick="onClickEditText"
         android:text="right"
         android:textAlignment="center"
@@ -178,7 +166,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+        app:layout_constraintTop_toTopOf="@+id/btRight2" />
 
 
     <EditText
@@ -186,11 +174,10 @@
         android:layout_width="50dp"
         android:layout_height="29dp"
         android:layout_marginStart="112dp"
-        android:layout_marginTop="144dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
-        android:inputType="textPersonName"
         android:imeOptions="actionDone"
+        android:inputType="textPersonName"
         android:onClick="onClickEditText"
         android:text="down"
         android:textAlignment="center"
@@ -198,18 +185,17 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+        app:layout_constraintTop_toTopOf="@+id/btDown2" />
 
     <EditText
         android:id="@+id/etLeft"
         android:layout_width="50dp"
         android:layout_height="29dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="96dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
-        android:inputType="textPersonName"
         android:imeOptions="actionDone"
+        android:inputType="textPersonName"
         android:onClick="onClickEditText"
         android:text="left"
         android:textAlignment="center"
@@ -217,14 +203,13 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+        app:layout_constraintTop_toTopOf="@+id/btLeft2" />
 
     <EditText
         android:id="@+id/etT"
         android:layout_width="50dp"
         android:layout_height="29dp"
         android:layout_marginEnd="116dp"
-        android:layout_marginTop="36dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
         android:imeOptions="actionDone"
@@ -236,14 +221,13 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+        app:layout_constraintTop_toTopOf="@+id/btT2" />
 
     <EditText
         android:id="@+id/etX"
         android:layout_width="50dp"
         android:layout_height="29dp"
         android:layout_marginEnd="116dp"
-        android:layout_marginTop="148dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
         android:imeOptions="actionDone"
@@ -255,14 +239,13 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+        app:layout_constraintTop_toTopOf="@+id/btX2" />
 
     <EditText
         android:id="@+id/etQ"
         android:layout_width="50dp"
         android:layout_height="29dp"
         android:layout_marginEnd="176dp"
-        android:layout_marginTop="96dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
         android:imeOptions="actionDone"
@@ -274,14 +257,13 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+        app:layout_constraintTop_toTopOf="@+id/btQ2" />
 
     <EditText
         android:id="@+id/etO"
         android:layout_width="50dp"
         android:layout_height="29dp"
         android:layout_marginEnd="56dp"
-        android:layout_marginTop="96dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
         android:imeOptions="actionDone"
@@ -293,7 +275,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+        app:layout_constraintTop_toTopOf="@+id/btO2" />
 
     <EditText
         android:id="@+id/etSelect"

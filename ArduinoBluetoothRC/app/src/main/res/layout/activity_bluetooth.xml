@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BluetoothActivity"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     >
 
     <include
@@ -13,6 +12,19 @@
         layout="@layout/app_bar">
     </include>
 
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adViewBluetooth"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
     <TextView
         android:id="@+id/textView"
@@ -20,14 +32,14 @@
         android:layout_height="43dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="8dp"
         android:gravity="center_vertical|center_horizontal"
         android:text="Connect a Bluetooth device"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/adViewBluetooth" />
 
     <ListView
         android:id="@+id/lvBT"
@@ -59,18 +71,6 @@
         android:progressDrawable="@drawable/circle"
         />
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adViewBluetooth"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        ads:adSize="SMART_BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
 
 </android.support.constraint.ConstraintLayout>

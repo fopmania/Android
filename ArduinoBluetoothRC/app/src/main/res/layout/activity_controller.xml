@@ -6,21 +6,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
+
     tools:context=".ControllerActivity">
 
     <include
         android:id="@+id/app_bar"
         layout="@layout/app_bar"></include>
 
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adViewController"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+
     <ImageButton
         android:id="@+id/btUp"
         android:layout_width="50dp"
         android:layout_height="70dp"
         android:layout_marginStart="112dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="48dp"
+        android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_up"
-        android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
@@ -64,7 +79,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginEnd="108dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="48dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_triangle"
@@ -109,33 +124,24 @@
         android:id="@+id/btSelect"
         android:layout_width="90dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="36dp"
-        android:layout_marginStart="232dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="220dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_select"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btDown"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/btStart"
         android:layout_width="90dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="36dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="220dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_start"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.109"
-        app:layout_constraintStart_toEndOf="@+id/btSelect"
-        app:layout_constraintTop_toBottomOf="@+id/btX"
-        app:layout_constraintVertical_bias="0.974" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

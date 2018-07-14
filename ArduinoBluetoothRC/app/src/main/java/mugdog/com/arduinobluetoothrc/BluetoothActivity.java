@@ -1,10 +1,12 @@
 package mugdog.com.arduinobluetoothrc;
 
 import android.annotation.SuppressLint;
+import android.appwidget.AppWidgetManager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -216,16 +218,16 @@ public class BluetoothActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setIcon(R.mipmap.ic_launcher2);
 
-
-
-        //ca-app-pub-2239158288105225/7625810987
         MobileAds.initialize(this, "ca-app-pub-2239158288105225~6675266363");
-//        MobileAds.initialize(this, "ca-app-pub-3940256099942544/6300978111");
+
+        //MobileAds.initialize(this, "ca-app-pub-3940256099942544/6300978111");
 
         AdView adView = (AdView)findViewById(R.id.adViewBluetooth);
         //adView.setAdSize(AdSize.BANNER);
         //adView.setAdUnitId("ca-app-pub-2239158288105225/7625810987");
-        AdRequest adR = new AdRequest.Builder().build();
+        AdRequest adR = new AdRequest.Builder()
+                .addTestDevice("B4438B8CFE663D4402842E80C188748E")
+                .build();
 //        AdRequest adR = new AdRequest.Builder().addTestDevice("B4438B8CFE663D4402842E80C188748E").build();
         adView.loadAd(adR);
 
@@ -265,25 +267,37 @@ public class BluetoothActivity extends AppCompatActivity {
 
         BluetoothActivity._instance = this;
 
-        // check install
+        Context context = getApplicationContext();
+        ComponentName name = new ComponentName(context, BluetoothActivity.class);
+        int [] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(name);
 
+        // check install
         SharedPreferences sp = getSharedPreferences("Shortcut", MODE_PRIVATE);
         if(sp.getString("isShortcut", "").isEmpty())
         {
-            Intent target = new Intent(getApplicationContext(), BluetoothActivity.class);
+            Intent shortcutIntent = new Intent(Intent.ACTION_MAIN);
+            shortcutIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+            shortcutIntent.setClassName(this, getClass().getName());
+            shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|
+                    Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+            Intent intent = new Intent();
+            intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+            intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getResources().getString(R.string.app_name));
+            intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+                    Intent.ShortcutIconResource.fromContext(this, R.mipmap.ic_launcher2));
+            intent.putExtra("duplicate", false);
 
-            Intent shout = new Intent();
-            shout.putExtra(Intent.EXTRA_SHORTCUT_INTENT, target);
-            shout.putExtra(Intent.EXTRA_SHORTCUT_NAME, getResources().getString(R.string.app_name));
-            shout.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-                    Intent.ShortcutIconResource.fromContext(getApplicationContext(), R.mipmap.ic_launcher) );
-            shout.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
-            getApplicationContext().sendBroadcast(shout);
+            intent.setAction("com.android.launcher.action.UNINSTALL_SHORTCUT");
+            getApplicationContext().sendBroadcast(intent);
+
+            intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+            getApplicationContext().sendBroadcast(intent);
 
             sp.edit().putString("isShortcut", "exist").commit();
         }
 
     }
+
 
 
     public void setBTAdapter(){

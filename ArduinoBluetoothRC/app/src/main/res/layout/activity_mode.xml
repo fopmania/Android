@@ -14,25 +14,42 @@
         android:id="@+id/app_bar"
         layout="@layout/app_bar"></include>
 
-    <ImageButton
-        android:id="@+id/btController"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adViewMode"
+        android:layout_width="300dp"
+        android:layout_height="42dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/icon_controller"
+        android:layout_marginTop="12dp"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
     <ImageButton
-        android:id="@+id/btTerminal"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:id="@+id/btController"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="70dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_controller"
+        app:layout_constraintBottom_toTopOf="@+id/btSwitch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/btTerminal"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -40,54 +57,44 @@
         android:src="@drawable/icon_terminal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btDimmer"
-        app:layout_constraintVertical_bias="0.372" />
+        app:layout_constraintTop_toBottomOf="@+id/btDimmer" />
 
     <ImageButton
         android:id="@+id/btSwitch"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:onClick="onClickSwitch"
         android:scaleType="centerInside"
         android:src="@drawable/icon_switch"
         android:text="Controller"
+        app:layout_constraintBottom_toTopOf="@+id/btDimmer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btController" />
 
     <ImageButton
         android:id="@+id/btDimmer"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:onClick="onClickDimmer"
         android:scaleType="centerInside"
         android:src="@drawable/icon_dimmer"
         android:text="Controller"
+        app:layout_constraintBottom_toTopOf="@+id/btTerminal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btSwitch" />
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adViewMode"
-        android:layout_width="300dp"
-        android:layout_height="42dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        ads:adSize="SMART_BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 </android.support.constraint.ConstraintLayout>

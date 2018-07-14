@@ -16,6 +16,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.io.IOException;
 
 
@@ -67,7 +70,7 @@ public class TerminalActivity extends AppCompatActivity {
                 if(actionId == EditorInfo.IME_ACTION_DONE){
                     if(txtCmd.getText().length() > 0){
                         String msg = txtCmd.getText().toString();
-                        etMonitor.append("> "+ msg+"\n");
+                        etMonitor.append("\n"+"> "+ msg);
                         txtCmd.setText("");
                         try {
                             activityBT.sendBT(msg);
@@ -95,6 +98,11 @@ public class TerminalActivity extends AppCompatActivity {
 //        txtCmd.setBackground(shape2);
 
 
+        AdView adView = (AdView)findViewById(R.id.adViewTerminal);
+        AdRequest adR = new AdRequest.Builder()
+                .addTestDevice("B4438B8CFE663D4402842E80C188748E")
+                .build();
+        adView.loadAd(adR);
 
 
         activityBT = BluetoothActivity.getInstance();
@@ -106,7 +114,7 @@ public class TerminalActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inf = getMenuInflater();
-        inf.inflate(R.menu.menu, menu);
+        inf.inflate(R.menu.menu_nosetting, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -121,13 +129,6 @@ public class TerminalActivity extends AppCompatActivity {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                 }
                 break;
-
-            case R.id.menu_settins:
-//                Intent it = new Intent(TerminalActivity.this, TerminalSettingsActivity.class);
-//                startActivity(it);
-                break;
-
-
         }
         return super.onOptionsItemSelected(item);
     }

@@ -21,6 +21,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.io.IOException;
 
 public class ControllerActivity extends AppCompatActivity {
@@ -71,6 +74,16 @@ public class ControllerActivity extends AppCompatActivity {
         activityBT.setReadBT(null);
 
         readKeySettings();
+
+        AdView adView = (AdView)findViewById(R.id.adViewController);
+        //adView.setAdSize(AdSize.BANNER);
+        //adView.setAdUnitId("ca-app-pub-2239158288105225/7625810987");
+//        AdRequest adR = new AdRequest.Builder().addTestDevice("B4438B8CFE663D4402842E80C188748E").build();
+        AdRequest adR = new AdRequest.Builder()
+                .addTestDevice("B4438B8CFE663D4402842E80C188748E")
+                .build();
+        adView.loadAd(adR);
+
     }
 
     @SuppressLint("ClickableViewAccessibility")

@@ -2,18 +2,19 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lySwitch"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context=".SwitchActivity">
+
     <include
         android:id="@+id/app_bar"
-        layout="@layout/app_bar"
-        />
+        layout="@layout/app_bar" />
 
     <com.google.android.gms.ads.AdView
-        android:id="@+id/adViewMode"
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adViewSwitch"
         android:layout_width="300dp"
         android:layout_height="42dp"
         android:layout_marginEnd="8dp"
@@ -39,7 +40,7 @@
         android:scaleY="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adViewMode" />
+        app:layout_constraintTop_toBottomOf="@+id/adViewSwitch" />
 
     <TextView
         android:id="@+id/tvSwitchText"
