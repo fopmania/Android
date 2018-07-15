@@ -100,7 +100,7 @@ public class TerminalActivity extends AppCompatActivity {
 
         AdView adView = (AdView)findViewById(R.id.adViewTerminal);
         AdRequest adR = new AdRequest.Builder()
-                .addTestDevice("B4438B8CFE663D4402842E80C188748E")
+//                .addTestDevice("B4438B8CFE663D4402842E80C188748E")
                 .build();
         adView.loadAd(adR);
 

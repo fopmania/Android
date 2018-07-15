@@ -134,7 +134,7 @@ public class DimmerActivity extends AppCompatActivity {
 
         mAdView = findViewById(R.id.adViewDimmer);
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("B4438B8CFE663D4402842E80C188748E")
+//                .addTestDevice("B4438B8CFE663D4402842E80C188748E")
                 .build();
         mAdView.loadAd(adRequest);
 

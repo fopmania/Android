@@ -17,12 +17,11 @@
         android:id="@+id/btUp2"
         android:layout_width="50dp"
         android:layout_height="70dp"
-        android:layout_marginStart="112dp"
         android:layout_marginTop="48dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_up"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btLeft2"
         app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
 
@@ -30,7 +29,7 @@
         android:id="@+id/btLeft2"
         android:layout_width="70dp"
         android:layout_height="50dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="30dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_left"
@@ -41,12 +40,11 @@
         android:id="@+id/btDown2"
         android:layout_width="50dp"
         android:layout_height="70dp"
-        android:layout_marginStart="112dp"
         android:layout_marginTop="48dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_down"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btLeft2"
         app:layout_constraintTop_toBottomOf="@+id/btUp2" />
 
     <ImageButton
@@ -64,12 +62,12 @@
         android:id="@+id/btT2"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="108dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="48dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_triangle"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btO2"
         app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
     <ImageButton
@@ -87,7 +85,7 @@
         android:id="@+id/btO2"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginEnd="30dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_circle"
@@ -98,12 +96,12 @@
         android:id="@+id/btX2"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="108dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="60dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_cross"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btO2"
         app:layout_constraintTop_toBottomOf="@+id/btT2" />
 
     <ImageButton
@@ -135,7 +133,6 @@
         android:layout_width="50dp"
         android:layout_height="29dp"
         android:layout_marginBottom="48dp"
-        android:layout_marginStart="112dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
         android:imeOptions="actionDone"
@@ -147,14 +144,15 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/btUp2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btUp2" />
+        app:layout_constraintStart_toStartOf="@+id/btUp2"
+        app:layout_constraintTop_toTopOf="@+id/btUp2"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/etRight"
         android:layout_width="50dp"
         android:layout_height="29dp"
-        android:layout_marginStart="168dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
         android:imeOptions="actionDone"
@@ -165,7 +163,7 @@
         android:textColor="@color/colorMonitorText"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btRight2"
         app:layout_constraintTop_toTopOf="@+id/btRight2" />
 
 
@@ -173,7 +171,6 @@
         android:id="@+id/etDown"
         android:layout_width="50dp"
         android:layout_height="29dp"
-        android:layout_marginStart="112dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
         android:imeOptions="actionDone"
@@ -184,14 +181,14 @@
         android:textColor="@color/colorMonitorText"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btDown2"
         app:layout_constraintTop_toTopOf="@+id/btDown2" />
 
     <EditText
         android:id="@+id/etLeft"
         android:layout_width="50dp"
         android:layout_height="29dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
         android:imeOptions="actionDone"
@@ -202,14 +199,14 @@
         android:textColor="@color/colorMonitorText"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btLeft2"
         app:layout_constraintTop_toTopOf="@+id/btLeft2" />
 
     <EditText
         android:id="@+id/etT"
         android:layout_width="50dp"
         android:layout_height="29dp"
-        android:layout_marginEnd="116dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
         android:imeOptions="actionDone"
@@ -220,14 +217,14 @@
         android:textColor="@color/colorMonitorText"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btT2"
         app:layout_constraintTop_toTopOf="@+id/btT2" />
 
     <EditText
         android:id="@+id/etX"
         android:layout_width="50dp"
         android:layout_height="29dp"
-        android:layout_marginEnd="116dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
         android:imeOptions="actionDone"
@@ -238,14 +235,14 @@
         android:textColor="@color/colorMonitorText"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btX2"
         app:layout_constraintTop_toTopOf="@+id/btX2" />
 
     <EditText
         android:id="@+id/etQ"
         android:layout_width="50dp"
         android:layout_height="29dp"
-        android:layout_marginEnd="176dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
         android:imeOptions="actionDone"
@@ -256,14 +253,14 @@
         android:textColor="@color/colorMonitorText"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btQ2"
         app:layout_constraintTop_toTopOf="@+id/btQ2" />
 
     <EditText
         android:id="@+id/etO"
         android:layout_width="50dp"
         android:layout_height="29dp"
-        android:layout_marginEnd="56dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/terminal_cmd"
         android:ems="10"
         android:imeOptions="actionDone"
@@ -274,7 +271,7 @@
         android:textColor="@color/colorMonitorText"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btO2"
         app:layout_constraintTop_toTopOf="@+id/btO2" />
 
     <EditText

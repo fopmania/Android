@@ -13,10 +13,9 @@
         android:id="@+id/app_bar"
         layout="@layout/app_bar"></include>
 
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adViewController"
-        android:layout_width="300dp"
+        android:layout_width="320dp"
         android:layout_height="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -31,12 +30,11 @@
         android:id="@+id/btUp"
         android:layout_width="50dp"
         android:layout_height="70dp"
-        android:layout_marginStart="112dp"
         android:layout_marginTop="48dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_up"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btLeft"
         app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
 
@@ -44,7 +42,7 @@
         android:id="@+id/btLeft"
         android:layout_width="70dp"
         android:layout_height="50dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="30dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_left"
@@ -55,12 +53,11 @@
         android:id="@+id/btDown"
         android:layout_width="50dp"
         android:layout_height="70dp"
-        android:layout_marginStart="112dp"
         android:layout_marginTop="48dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_down"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btLeft"
         app:layout_constraintTop_toBottomOf="@+id/btUp" />
 
     <ImageButton
@@ -78,12 +75,11 @@
         android:id="@+id/btT"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="108dp"
         android:layout_marginTop="48dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_triangle"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btO"
         app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
     <ImageButton
@@ -101,7 +97,7 @@
         android:id="@+id/btO"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginEnd="30dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_circle"
@@ -112,12 +108,11 @@
         android:id="@+id/btX"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="108dp"
         android:layout_marginTop="60dp"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/bt_cross"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btO"
         app:layout_constraintTop_toBottomOf="@+id/btT" />
 
     <ImageButton
