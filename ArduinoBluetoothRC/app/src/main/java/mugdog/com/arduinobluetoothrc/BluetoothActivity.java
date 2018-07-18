@@ -17,6 +17,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PersistableBundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -272,6 +273,7 @@ public class BluetoothActivity extends AppCompatActivity {
         int [] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(name);
 
         // check install
+        /*
         SharedPreferences sp = getSharedPreferences("Shortcut", MODE_PRIVATE);
         if(sp.getString("isShortcut", "").isEmpty())
         {
@@ -295,6 +297,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
             sp.edit().putString("isShortcut", "exist").commit();
         }
+        */
 
     }
 
@@ -340,7 +343,7 @@ public class BluetoothActivity extends AppCompatActivity {
         if(BTAdapter == null || !BTAdapter.isEnabled())      return;
 
         BTAdapter.startDiscovery();
-        registerReceiver(brReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
+        LocalBroadcastManager.getInstance(this).registerReceiver(brReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
     }
 
     void updateBTDevices(){
@@ -356,8 +359,10 @@ public class BluetoothActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         if(isVirtual == false){
-            unregisterReceiver(brReceiver);
+            if(brReceiver != null)
+                LocalBroadcastManager.getInstance(this).unregisterReceiver(brReceiver);
             try {
                 if(BTThread != null)
                     BTThread.closeSocket();
@@ -365,7 +370,6 @@ public class BluetoothActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        super.onDestroy();
     }
 
     @Override

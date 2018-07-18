@@ -6,8 +6,8 @@ android {
         applicationId "mugdog.com.arduinobluetoothrc"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "1.02b"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -18,6 +18,15 @@ android {
     }
     buildToolsVersion '28.0.0'
     productFlavors {
+    }
+
+    applicationVariants.all{ variant ->
+        variant.outputs.all {
+            def newApkName
+            newApkName = "ArduinoBluetoothRC-" + defaultConfig.versionName + "-" + defaultConfig.versionCode+".apk"
+            outputFileName = newApkName;
+        }
+
     }
 }
 
