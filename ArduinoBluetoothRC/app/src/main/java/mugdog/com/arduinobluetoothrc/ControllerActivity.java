@@ -153,6 +153,8 @@ public class ControllerActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mi = getMenuInflater();
         mi.inflate(R.menu.menu, menu);
+        MenuItem itm = menu.findItem(R.id.menu_about);
+        itm.setTitle(BluetoothActivity.version_name);
 
         return super.onCreateOptionsMenu(menu);
     }

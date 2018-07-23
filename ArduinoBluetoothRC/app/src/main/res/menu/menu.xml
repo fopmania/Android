@@ -13,7 +13,7 @@
     </item>
     <item
         android:id="@+id/menu_about"
-        android:title="@string/version_name"
+        android:title="Version"
         app:showAsAction="never">
     </item>
 

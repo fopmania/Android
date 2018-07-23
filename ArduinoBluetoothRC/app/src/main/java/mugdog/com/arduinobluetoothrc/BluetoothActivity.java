@@ -10,8 +10,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -47,6 +48,7 @@ import java.util.UUID;
 public class BluetoothActivity extends AppCompatActivity {
 
     public boolean isVirtual = false;
+    public static String version_name;
 
     private BluetoothAdapter        BTAdapter;
     private BluetoothSocket         BTSocket = null;
@@ -211,6 +213,13 @@ public class BluetoothActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            BluetoothActivity.version_name = pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
 
@@ -376,6 +385,8 @@ public class BluetoothActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mi = getMenuInflater();
         mi.inflate(R.menu.menu_bluetooth, menu);
+        MenuItem itm = menu.findItem(R.id.menu_about);
+        itm.setTitle(BluetoothActivity.version_name);
         return super.onCreateOptionsMenu(menu);
     }
 

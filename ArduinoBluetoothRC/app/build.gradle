@@ -4,10 +4,10 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "mugdog.com.arduinobluetoothrc"
-        minSdkVersion 21
-        targetSdkVersion 26
-        versionCode 5
-        versionName "1.02b"
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 7
+        versionName "ABRC v1.02c"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

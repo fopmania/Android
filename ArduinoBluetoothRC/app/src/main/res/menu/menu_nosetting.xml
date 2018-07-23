@@ -7,5 +7,5 @@
         android:title="@string/Rating_name" />
     <item
         android:id="@+id/menu_about"
-        android:title="@string/version_name" />
+        android:title="Version" />
 </menu>

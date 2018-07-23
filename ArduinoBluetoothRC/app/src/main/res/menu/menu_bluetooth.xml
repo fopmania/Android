@@ -12,6 +12,6 @@
         android:id="@+id/menuBTVirtual"
         android:title="Virtual BT" />
     <item
-        android:id="@+id/menuBTAbout"
-        android:title="@string/version_name" />
+        android:id="@+id/menu_about"
+        android:title="Version" />
 </menu>
