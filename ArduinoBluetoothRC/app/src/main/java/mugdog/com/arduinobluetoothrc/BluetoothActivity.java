@@ -88,6 +88,7 @@ public class BluetoothActivity extends AppCompatActivity {
     {
         if(isVirtual)   return;
         BTThread.closeSocket();
+        BTThread.interrupt();
     }
 
 
@@ -373,8 +374,10 @@ public class BluetoothActivity extends AppCompatActivity {
             if(brReceiver != null)
                 LocalBroadcastManager.getInstance(this).unregisterReceiver(brReceiver);
             try {
-                if(BTThread != null)
+                if(BTThread != null){
                     BTThread.closeSocket();
+                    BTThread.interrupt();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

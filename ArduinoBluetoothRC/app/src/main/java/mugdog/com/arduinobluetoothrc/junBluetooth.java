@@ -63,8 +63,6 @@ public class junBluetooth {
         private final InputStream       inStream;
         private final OutputStream      outStream;
         private final staticHandler     sHandler;
-        private boolean loop = true;
-
 
         public ConnectThread(BluetoothSocket btS, staticHandler sH) {
             this.btSocket = btS;
@@ -84,7 +82,7 @@ public class junBluetooth {
         public void run() {
             byte[] buffer = new byte[1024];
             int bytes = 0;
-            while(loop){
+            while(!Thread.currentThread().interrupted()){
                 try {
                     bytes = this.inStream.available();
                     if(bytes != 0){
@@ -106,7 +104,6 @@ public class junBluetooth {
         }
 
         public void closeSocket() throws IOException {
-            loop = false;
             btSocket.close();
         }
     }
