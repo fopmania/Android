@@ -34,6 +34,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.github.jakob-grabner:Circle-Progress-View:v1.3'
+    implementation 'com.kovachcode:timePickerWithSeconds:1.0.1'
+
+    implementation 'com.github.aakira:expandable-layout:1.4.2@aar'
 }
 repositories {
     mavenCentral()
