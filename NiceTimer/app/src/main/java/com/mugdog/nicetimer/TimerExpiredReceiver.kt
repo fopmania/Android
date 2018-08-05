@@ -6,17 +6,15 @@ import android.content.Intent
 import com.mugdog.nicetimer.util.PrefUtil
 import android.media.RingtoneManager
 import android.media.Ringtone
-
+import android.util.Log
 
 
 class TimerExpiredReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        PrefUtil.setTimerState(TimerActivity.TimerState.Stopped, context)
+        Log.d("nicetimer", "TimerExpiredReceiver.onReceive ")
+        PrefUtil.setTimerState(TimerActivity.TimerState.Alarm, context)
         PrefUtil.setAlarmSetTime(0, context)
-
-        val rt = TimerActivity.getRingtone()
-        if(!rt.isPlaying)
-            rt.play()
+        TimerActivity.playRingtone()
     }
 }

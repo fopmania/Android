@@ -2,26 +2,23 @@ package com.mugdog.nicetimer.util
 
 import android.content.Context
 import android.preference.PreferenceManager
+import android.util.Log
 import com.mugdog.nicetimer.TimerActivity
 
 
 class PrefUtil{
     companion object {
 
-        fun getTimerLength( context : Context): Float{
-            return 1f
-        }
+        private const val TIMER_LENGTH_SECONDS_ID = "com.mugdog.nicetimer.timer_length"
 
-        private const val PREVIOUS_TIMER_LENGTH_SECONDS_ID = "com.mugdog.nicetimer.previous_timer_length"
-
-        fun getPreviousTimerLengthSeconds(context: Context): Float{
+        fun getTimerLengthSeconds(context: Context): Float{
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-            return preferences.getFloat(PREVIOUS_TIMER_LENGTH_SECONDS_ID, 1f)
+            return preferences.getFloat(TIMER_LENGTH_SECONDS_ID, 0f)
         }
 
-        fun setPreviousTimerLengthSeconds(seconds: Float, context: Context){
+        fun setTimerLengthSeconds(seconds: Float, context: Context){
             val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
-            editor.putFloat(PREVIOUS_TIMER_LENGTH_SECONDS_ID, seconds)
+            editor.putFloat(TIMER_LENGTH_SECONDS_ID, seconds)
             editor.apply()
         }
 
@@ -37,6 +34,7 @@ class PrefUtil{
             val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
             val ordinal = state.ordinal
             editor.putInt(TIMER_STATE_ID, ordinal)
+            Log.d("nicetimer", "setTimerState: " + ordinal)
             editor.apply()
         }
 
@@ -44,12 +42,15 @@ class PrefUtil{
 
         fun getTimerRemaining(context: Context) : Float{
             val pref = PreferenceManager.getDefaultSharedPreferences(context)
-            return pref.getFloat(TIMER_REMAINING_ID, 0f)
+            val tr = pref.getFloat(TIMER_REMAINING_ID, 0f)
+            Log.d("nicetimer", "setTimerState: " + tr)
+            return tr
         }
 
         fun setTimerRemaining(seconds: Float, context: Context){
             val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
             editor.putFloat(TIMER_REMAINING_ID, seconds)
+            Log.d("nicetimer", "setTimerRemaining: " + seconds)
             editor.apply()
         }
 
@@ -57,12 +58,15 @@ class PrefUtil{
 
         fun getAlarmSetTime(context: Context): Long{
             val pref = PreferenceManager.getDefaultSharedPreferences(context)
-            return pref.getLong(ALARM_SET_TIME_ID, 0)
+            val st = pref.getLong(ALARM_SET_TIME_ID, 0)
+            Log.d("nicetimer", "getAlarmSetTime: " + st)
+            return st
         }
 
         fun setAlarmSetTime(time: Long, context: Context){
             val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
             editor.putLong(ALARM_SET_TIME_ID, time)
+            Log.d("nicetimer", "setAlarmSetTime: " + time)
             editor.apply()
         }
     }

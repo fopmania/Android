@@ -41,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text="Expandable Layout provides an easy way to create a view called header with an expandable view. Views are external layout to allow a maximum of customization." />
         </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+
     </RelativeLayout>
 
 
@@ -85,10 +86,37 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:textSize="65sp"
         android:textStyle="bold"
+        android:longClickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btRunning"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="108dp"
+        android:layout_marginTop="12dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/background_timer"
+        app:srcCompat="@drawable/sub_star_btn" />
+
+    <ImageButton
+        android:id="@+id/btReload"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="12dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/background_timer"
+        app:srcCompat="@drawable/sub_re_btn" />
 
 
 </android.support.constraint.ConstraintLayout>
