@@ -11,7 +11,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
-        versionName "1.0"
+        versionName "NT 1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -20,6 +20,15 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    applicationVariants.all{ variant ->
+        variant.outputs.all{
+            def newApkName
+            newApkName = "NiceTimer-" + defaultConfig.versionName + "-" + defaultConfig.versionCode + ".apk"
+            outputFileName = newApkName
+        }
+
     }
 }
 

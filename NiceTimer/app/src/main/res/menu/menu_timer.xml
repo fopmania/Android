@@ -3,10 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.mugdog.nicetimer.TimerActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_settings"
-        />
+        android:id="@+id/menu_rating"
+        android:title="@string/Rating_name"
+        app:showAsAction="never">
+    </item>
+    <item
+        android:id="@+id/menu_settins"
+        android:title="@string/settings_name"
+        app:showAsAction="never">
+    </item>
+    <item
+        android:id="@+id/menu_about"
+        android:title="Version"
+        app:showAsAction="never">
+    </item>
 </menu>

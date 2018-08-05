@@ -20,7 +20,8 @@
             android:background="@color/colorButtonTimerList"
             android:drawableRight="@android:drawable/arrow_down_float"
             android:paddingRight="10dp"
-            android:text="Expandable Layout Example"
+            android:text="00:00:00"
+            android:textSize="32sp"
             android:textColor="#fff" />
 
         <com.github.aakira.expandablelayout.ExpandableRelativeLayout
@@ -39,7 +40,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Expandable Layout provides an easy way to create a view called header with an expandable view. Views are external layout to allow a maximum of customization." />
+                android:text="00:00:00" />
         </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 
     </RelativeLayout>

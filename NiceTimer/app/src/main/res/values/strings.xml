@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">NiceTimer</string>
+    <string name="app_name">Nice Timer</string>
+    <string name="settings_name">Settings</string>
     <string name="action_settings">Settings</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Rating_name">Rating</string>
+    <string name="banner_ad_unit_id">ca-app-pub-2239158288105225/7625810987</string>
+    <string name="version_name">NT v1.0</string>
 </resources>

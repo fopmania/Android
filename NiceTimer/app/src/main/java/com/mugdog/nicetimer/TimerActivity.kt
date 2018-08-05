@@ -8,6 +8,8 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.media.Ringtone
 import android.media.RingtoneManager
+import android.net.Uri
+import android.net.Uri.parse
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.PersistableBundle
@@ -125,12 +127,29 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
         }
 
         tv_countdown.setOnLongClickListener {
-            setCountTimer()
+            if(timerState == TimerState.Stopped)
+                setCountTimer()
             false;
         }
 
-        PrefUtil.setTimerState(TimerState.Stopped, this)
-        setPreviousTimerLength();
+        background_timer.setOnClickListener {
+            onTimerCenterClick()
+        }
+        background_timer.setOnLongClickListener {
+            if(timerState == TimerState.Stopped)
+                setCountTimer()
+            false;
+        }
+        background_timer.setImageResource( R.drawable.sub_g_star_btn)
+
+//        val alarmSetTime = PrefUtil.getAlarmSetTime(this)
+//        if(alarmSetTime > 0){
+//            val sec  = (nowSeconds - alarmSetTime)/1000.0f
+//            if(timerState == TimerState.Alarm && sec > 30.0f){
+//                PrefUtil.setTimerState(TimerState.Stopped, this)
+//                setPreviousTimerLength();
+//            }
+//        }
 
         val myFont = Typeface.createFromAsset(applicationContext.assets, "fonts/ds_digib.ttf")
         tv_countdown.setTypeface(myFont);
@@ -139,15 +158,6 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
             btTimeListBar.toggle()
         }
 
-        background_timer.setImageResource( R.drawable.sub_g_set_btn)
-
-        background_timer.setOnClickListener {
-            onTimerCenterClick()
-        }
-        background_timer.setOnLongClickListener {
-            setCountTimer()
-            false;
-        }
 
 
         val rtUri = RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_RINGTONE)
@@ -163,8 +173,6 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
                 }else{
                     onRunningTimer()
                 }
-                // or  Start
-                // onClickStart()
             }
             TimerState.Alarm -> {
                 onResetTimer()
@@ -279,7 +287,7 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
             secondsRemaining -= sec
         }
 
-        if(timerState == TimerState.Running){
+        if(timerState == TimerState.Running || timerState == TimerState.Paused){
             if(secondsRemaining <= 0)   onTimerFinished()
             else    startTimer()
         }
@@ -372,14 +380,25 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
         tv_countdown.setTextSize(TypedValue.COMPLEX_UNIT_SP, 60f)
         return "${if(hour.toString().length == 1) "0"+hour.toString() else hour.toString()}\n${
                     if(minute.toString().length == 1) "0"+minute.toString() else minute.toString()}:${
-                        if(second.toString().length == 1) "0"+second.toString() else second.toString()}"
+                    if(second.toString().length == 1) "0"+second.toString() else second.toString()}"
     }
 
+    private fun getTimeStringHHMMSS(value: Float): CharSequence? {
+        val hour = (value / 3600).toInt()
+        val minute = (value / 60).toInt() % 60
+        val second = (value % 60).toInt()
+
+        return "${if(hour.toString().length == 1) "0"+hour.toString() else hour.toString()}:${
+            if(minute.toString().length == 1) "0"+minute.toString() else minute.toString()}:${
+            if(second.toString().length == 1) "0"+second.toString() else second.toString()}"
+    }
 
     private fun updateCountdownUI() {
+        btTimeList.text = getTimeStringHHMMSS(timerLengthSeconds)
         tv_countdown.text = getTimeString(secondsRemaining)
         progress_countdown.setValue((timerLengthSeconds - secondsRemaining)*10)
     }
+
 
     private fun updateButtons() {
         when(timerState){
@@ -412,18 +431,41 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_timer, menu)
+        val itm = menu.findItem(R.id.menu_about)
+        val info = this.packageManager.getPackageInfo(packageName, 0)
+        itm.title = info.versionName
+
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.menu_rating -> {
+
+                val appPackageName = packageName // getPackageName() from Context or Activity object
+                try {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+                } catch (e: android.content.ActivityNotFoundException) {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+                }
+
+
+//                val uris = Uri.parse("market://details?id=" + packageName.toString())
+//                val intent = Intent(Intent.ACTION_VIEW, uris)
+//                startActivity(intent)
+
+            }
+            R.id.menu_settins -> {
+
+            }
+            R.id.menu_about -> {
+
+            }
         }
+        return super.onOptionsItemSelected(item)
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
