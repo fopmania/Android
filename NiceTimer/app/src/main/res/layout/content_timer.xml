@@ -8,44 +8,6 @@
     tools:context=".TimerActivity"
     tools:showIn="@layout/activity_timer">
 
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:id="@+id/btTimeList"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorButtonTimerList"
-            android:drawableRight="@android:drawable/arrow_down_float"
-            android:paddingRight="10dp"
-            android:text="00:00:00"
-            android:textSize="32sp"
-            android:textColor="#fff" />
-
-        <com.github.aakira.expandablelayout.ExpandableRelativeLayout
-            android:id="@+id/btTimeListBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btTimeList"
-            android:background="@color/colorBarTimerList"
-            android:padding="16dp"
-            app:ael_duration="400"
-            app:ael_expanded="false"
-            app:ael_interpolator="decelerate"
-            app:ael_orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/btTimeList">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00:00:00" />
-        </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
-
-    </RelativeLayout>
-
-
     <ImageView
         android:id="@+id/background_timer"
         android:layout_width="290dp"
@@ -93,31 +55,41 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/btRunning"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="108dp"
-        android:layout_marginTop="12dp"
-        android:background="@android:color/transparent"
-        android:scaleType="centerInside"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/background_timer"
-        app:srcCompat="@drawable/sub_star_btn" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/btReload"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="12dp"
-        android:background="@android:color/transparent"
-        android:scaleType="centerInside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/background_timer"
-        app:srcCompat="@drawable/sub_re_btn" />
+        <Button
+            android:id="@+id/btTimeList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorButtonTimerList"
+            android:drawableRight="@android:drawable/arrow_down_float"
+            android:paddingRight="10dp"
+            android:text="00:00:00"
+            android:textColor="#fff"
+            android:textSize="32sp" />
+
+        <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+            android:id="@+id/btTimeListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btTimeList"
+            android:background="@color/colorBarTimerList"
+            android:padding="16dp"
+            app:ael_duration="400"
+            app:ael_expanded="false"
+            app:ael_interpolator="decelerate"
+            app:ael_orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/btTimeList">
+
+            <ListView
+                android:id="@+id/lvTimerHistory"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+
+    </RelativeLayout>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -93,7 +93,7 @@
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/img/stop512.png" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/img/stop_icon.png" />
                                     </map>
                                   </option>
                                 </PersistentState>

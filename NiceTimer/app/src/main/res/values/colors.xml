@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimaryDark">#422e1e</color>
+    <color name="colorPrimaryDark">#231810</color>
     <color name="colorPrimary">#564127</color>
+    <color name="colorBackground">#422e1e</color>
     <color name="colorAccent">#ff0000</color>
     <color name="textColorPrimary">#FFFFFF</color>
-    <color name="colorButtonTimerList">#a54d0e</color>
-    <color name="colorBarTimerList">#e36811</color>
+    <color name="colorButtonTimerList">#564127</color>
+    <color name="colorBarTimerList">#564127</color>
     <color name="colorBar1">#2237ff</color>
     <color name="colorBar2">#05de24</color>
     <color name="colorBar3">#fcff00</color>
