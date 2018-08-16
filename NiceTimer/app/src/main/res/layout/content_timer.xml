@@ -20,7 +20,8 @@
         app:layout_constraintEnd_toEndOf="@+id/progress_countdown"
         app:layout_constraintStart_toStartOf="@+id/progress_countdown"
         app:layout_constraintTop_toTopOf="@+id/progress_countdown"
-        app:srcCompat="@drawable/sub_panel" />
+        app:srcCompat="@drawable/sub_panel"
+        />
 
     <at.grabner.circleprogress.CircleProgressView
 
@@ -44,12 +45,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
+        android:longClickable="true"
         android:text="10:00"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:textSize="65sp"
         android:textStyle="bold"
-        android:longClickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -71,23 +72,73 @@
             android:textSize="32sp" />
 
         <com.github.aakira.expandablelayout.ExpandableRelativeLayout
-            android:id="@+id/btTimeListView"
+            android:id="@+id/lyTimeListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/btTimeList"
-            android:background="@color/colorBarTimerList"
+            android:background="@color/colorBackground"
             android:padding="16dp"
-            app:ael_duration="400"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:ael_duration="200"
             app:ael_expanded="false"
             app:ael_interpolator="decelerate"
             app:ael_orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/btTimeList">
 
+
+            <EditText
+                android:id="@+id/etCurName"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:paddingLeft="10dp"
+                android:background="@drawable/input_name"
+                android:maxLength="15"
+                android:text=""
+                android:inputType="textPersonName"
+                android:textAlignment="textStart"
+                android:textColor="@color/textColorPrimary"
+                android:textCursorDrawable="@color/textColorPrimary"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tvCurTime"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/btAdd"
+                android:background="@color/colorPrimaryDark"
+                android:text="00:00:00"
+                android:textAlignment="center"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="171dp"
+                tools:layout_editor_absoluteY="0dp"
+                tools:ignore="MissingConstraints" />
+
+            <ImageButton
+                android:id="@+id/btAdd"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="8dp"
+                android:background="@color/colorPrimaryDark"
+                android:cropToPadding="false"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@android:drawable/ic_input_add" />
+
             <ListView
-                android:id="@+id/lvTimerHistory"
+                android:id="@+id/lvHistory"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="200dp"
+                android:layout_below="@+id/tvCurTime"
+                />
+
+
         </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+
+
 
     </RelativeLayout>
 

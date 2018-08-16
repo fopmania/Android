@@ -11,6 +11,8 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 public class ControllerSettingActivity extends AppCompatActivity {
 
     EditText etUp, etDown, etLeft, etRight, etX, etO, etT, etQ, etStart, etSelect;
+    CheckBox cbVib;
 
 
     @Override
@@ -53,8 +56,21 @@ public class ControllerSettingActivity extends AppCompatActivity {
         etStart = (EditText) findViewById(R.id.etStart);
         setEditorActionListener(etStart);
 
+        cbVib = (CheckBox) findViewById(R.id.cbVibration);
+        cbVib.setOnCheckedChangeListener(
+            new CheckBox.OnCheckedChangeListener(){
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    ControllerActivity.getInstance().isVibration = isChecked;
+                    ControllerActivity.getInstance().storeKeySettings();
+                }
+            }
+        );
+
         readKeySettings();
     }
+
+
 
     private void setEditorActionListener(EditText et){
         et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -117,11 +133,12 @@ public class ControllerSettingActivity extends AppCompatActivity {
         etQ.setText(ca.keyQ);
         etSelect.setText(ca.keySelect);
         etStart.setText(ca.keyStart);
+        cbVib.setChecked(ca.isVibration);
     }
 
     @Override
     public void onBackPressed() {
-//        ControllerActivity.getInstance().storeKeySettings();
+        ControllerActivity.getInstance().storeKeySettings();
         super.onBackPressed();
     }
     

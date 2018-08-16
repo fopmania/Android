@@ -13,5 +13,9 @@
     <color name="colorBar4">#ff0000</color>
     <color name="colorTimePickerAccent">#000000</color>
     <color name="colorTimePickerNormal">#1565c0</color>
+    <color name="colorGray">#2e2e2e</color>
+    <color name="colorDrakGray">#212121</color>
+    <color name="colorMenu">#535353</color>
+    <color name="colorForeground">#9c9c9c</color>
 
 </resources>

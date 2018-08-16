@@ -1,5 +1,6 @@
 package com.mugdog.nicetimer
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -9,7 +10,6 @@ import android.graphics.Typeface
 import android.media.Ringtone
 import android.media.RingtoneManager
 import android.net.Uri
-import android.net.Uri.parse
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.PersistableBundle
@@ -19,18 +19,28 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.ListView
+import com.github.aakira.expandablelayout.ExpandableLayoutListener
+import com.mugdog.nicetimer.dapters.TimerAdapter
+import com.mugdog.nicetimer.model.DBHelper
+import com.mugdog.nicetimer.model.NTimer
 import com.mugdog.nicetimer.util.NotificationUtil
 import com.mugdog.nicetimer.util.PrefUtil
+import com.mugdog.nicetimer.util.TimerUtil
 
 import kotlinx.android.synthetic.main.activity_timer.*
 import kotlinx.android.synthetic.main.content_timer.*
 import java.util.*
+import kotlin.math.min
+
 
 class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener {
-    override fun onSetTimer(second_time: Float) {
+    override fun onSetTimer(timerName : String, second_time: Float) {
         timerLengthSeconds = second_time
         secondsRemaining = second_time
+        PrefUtil.setTimerName(timerName, this)
         PrefUtil.setTimerLengthSeconds(second_time, this)
         setPreviousTimerLength();
         updateCountdownUI()
@@ -61,6 +71,11 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
         }
 
 
+        fun removeTimer(id: Int){
+            instance?.deleteDB(id)
+        }
+
+
         fun setAlarm(context: Context, secondsRemaining: Float): Long{
             val wakeUpTime = nowSeconds + (secondsRemaining*1000).toLong()
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -80,10 +95,14 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
             PrefUtil.setAlarmSetTime(0, context)
         }
 
+        fun setTimerInfo(name: String, seconds: Float) {
+            instance?.setTimerName(name, seconds)
+        }
+
+
         val nowSeconds: Long
             get() = Calendar.getInstance().timeInMillis
 //            get() = System.currentTimeMillis()
-
 
     }
 
@@ -93,10 +112,14 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
 
     private lateinit var ringtone : Ringtone
     private var cdtimer: CountDownTimer? = null
+    private var timerName = ""
     private var timerLengthSeconds = 0f
     private var timerState = TimerState.Stopped
     private var secondsRemaining = 0f
-    private var listTimer : kotlin.collections.List<String> = java.util.ArrayList()
+    private var listTimer : kotlin.collections.List<NTimer> = java.util.ArrayList()
+
+    private lateinit var dbh : DBHelper
+    private lateinit var  tAdapter : TimerAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?){
@@ -128,7 +151,10 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
         }
 
         fab_stop.setOnClickListener {
-            onStopTimer()
+//            onStopTimer()
+            if(timerState == TimerState.Running) cdtimer?.cancel()
+            onResetTimer()
+            updateButtons()
         }
 
         fab_setting.setOnClickListener {
@@ -170,24 +196,100 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
 
         btTimeList.setTypeface(myFont)
         btTimeList.setOnClickListener { v ->
-            btTimeListView.toggle()
+            lyTimeListView.toggle()
         }
-        btTimeListView.collapse()
+        lyTimeListView.collapse()
 
+        lyTimeListView.setListener(object : ExpandableLayoutListener {
+            override fun onOpened() {
+            }
+            override fun onAnimationStart() {
+            }
+            override fun onClosed() {
+            }
+            override fun onAnimationEnd() {
+            }
+            override fun onPreOpen() {
+                etCurName?.setText(timerName)
+                tvCurTime?.text = TimerUtil.getTimeStringHHMMSS(timerLengthSeconds)
+                disableButtons()
+//                resizeTimerListView()
+                applyDB()
+            }
 
+            override fun onPreClose() {
+                updateButtons()
+                hideKeyboard(lvHistory)
+            }
+
+        })
         val rtUri = RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_RINGTONE)
         ringtone = RingtoneManager.getRingtone(this, rtUri)
 
 
 
-//        listTimer += "00:01:03"
-//        listTimer += "00:02:00"
-//        listTimer += "00:02:30"
+//        listTimer += NTimer(0, "Kitchin", 65.0f)
+//        listTimer += NTimer(0, "Egg", 165.0f)
+//        listTimer += NTimer(0, "Rice", 35.0f)
+//        listTimer += NTimer(0, "Egg", 165.0f)
+//        listTimer += NTimer(0, "Egg", 165.0f)
+//        listTimer += NTimer(0, "Egg", 165.0f)
+//        listTimer += NTimer(0, "Egg", 165.0f)
 
-        var ad = ArrayAdapter(this, android.R.layout.simple_list_item_1, listTimer)
-        lvTimerHistory.adapter = ad
+        tAdapter = TimerAdapter(this, R.layout.lv_history, listTimer)
+        lvHistory.adapter = tAdapter
+        tAdapter.notifyDataSetChanged()
+        //resizeTimerListView()
+
+        dbh = DBHelper(this)
+
+        btAdd.setOnClickListener {
+            val nt = NTimer(0, etCurName.text.toString(), timerLengthSeconds)
+            dbh.insertData(nt)
+            applyDB()
+        }
+//        btDelete.setOnClickListener{
+//            val nt = NTimer(0, etCurName.text.toString(), timerLengthSeconds)
+//            dbh.insertData(nt)
+//            applyDB()
+//        }
+    }
+
+    fun hideKeyboard(view: View) {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    fun applyDB(){
+        listTimer = dbh.readData()
+        tAdapter = TimerAdapter(this, R.layout.lv_history, listTimer)
+        lvHistory.adapter = tAdapter
+        tAdapter.notifyDataSetChanged()
+    }
+
+    fun deleteDB(id : Int){
+        dbh.deleteData(id)
+        listTimer = dbh.readData()
+        tAdapter = TimerAdapter(this, R.layout.lv_history, listTimer)
+        lvHistory.adapter = tAdapter
+        tAdapter.notifyDataSetChanged()
+    }
+
+    fun setTimerName(name: String, seconds: Float) {
+        timerName = name
+        timerLengthSeconds = seconds
+        secondsRemaining = seconds
+        PrefUtil.setTimerName(name, this)
+        PrefUtil.setTimerLengthSeconds(seconds, this)
+        setNewTimerLength()
+        updateCountdownUI()
+    }
 
 
+    private fun resizeTimerListView(){
+        val lp = lvHistory.layoutParams
+        lp.height = min(50 * listTimer.size, 600)
+        lvHistory.layoutParams = lp
     }
 
     private fun onTimerCenterClick() {
@@ -209,14 +311,6 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
                 onStartTimer()
             }
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
-        super.onSaveInstanceState(outState, outPersistentState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
     }
 
 
@@ -245,6 +339,7 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
         onResetTimer()
         val newFragment = TimePickerFragment()
         val bundle = Bundle()
+        bundle.putString("Name", timerName)
         bundle.putFloat("Timer", secondsRemaining)
         newFragment.arguments = bundle
         newFragment.show(supportFragmentManager, "Timer Setting")
@@ -293,6 +388,7 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
             }
             TimerState.Paused -> NotificationUtil.showTimerPause(this)
         }
+        PrefUtil.setTimerName(timerName, this)
         PrefUtil.setTimerLengthSeconds(timerLengthSeconds, this)
         PrefUtil.setTimerRemaining(secondsRemaining, this)
         PrefUtil.setTimerState(timerState, this)
@@ -383,12 +479,14 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
 
     private fun setNewTimerLength() {
 //        val lengthInMinutes = PrefUtil.getTimerLength(this)
+        timerName = PrefUtil.getTimerName(this)
         timerLengthSeconds = PrefUtil.getTimerLengthSeconds(this)
         progress_countdown.maxValue = timerLengthSeconds*10
 
     }
 
     private fun setPreviousTimerLength() {
+        timerName = PrefUtil.getTimerName(this)
         timerLengthSeconds = PrefUtil.getTimerLengthSeconds(this)
         progress_countdown.maxValue = timerLengthSeconds*10
     }
@@ -420,18 +518,12 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
                     if(second.toString().length == 1) "0"+second.toString() else second.toString()}"
     }
 
-    private fun getTimeStringHHMMSS(value: Float): CharSequence? {
-        val hour = (value / 3600).toInt()
-        val minute = (value / 60).toInt() % 60
-        val second = (value % 60).toInt()
-
-        return "${if(hour.toString().length == 1) "0"+hour.toString() else hour.toString()}:${
-            if(minute.toString().length == 1) "0"+minute.toString() else minute.toString()}:${
-            if(second.toString().length == 1) "0"+second.toString() else second.toString()}"
-    }
 
     private fun updateCountdownUI() {
-        btTimeList.text = getTimeStringHHMMSS(timerLengthSeconds)
+        var tn = TimerUtil.getTimeStringHHMMSS(timerLengthSeconds)
+        if(timerName.isNotEmpty()) tn = "$timerName  $tn"
+
+        btTimeList.text = tn
         tv_countdown.text = getTimeString(secondsRemaining)
         progress_countdown.setValue((timerLengthSeconds - secondsRemaining)*10)
     }
@@ -442,12 +534,14 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
             TimerState.Running ->{
                 fab_play.isEnabled = true
                 fab_stop.isEnabled = true
+                fab_setting.isEnabled = false
                 fab_play.setImageResource(R.drawable.ic_pause)
                 background_timer.setImageResource(R.drawable.sub_g_pause_btn)
             }
             TimerState.Stopped ->{
                 fab_play.isEnabled = true
                 fab_stop.isEnabled = false
+                fab_setting.isEnabled = true
                 fab_play.setImageResource(R.drawable.ic_play)
                 if(timerLengthSeconds <= 0f)
                     background_timer.setImageResource(R.drawable.sub_g_set_btn)
@@ -457,18 +551,25 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
             TimerState.Paused ->{
                 fab_play.isEnabled = true
                 fab_stop.isEnabled = true
+                fab_setting.isEnabled = true
                 fab_play.setImageResource(R.drawable.ic_play)
                 background_timer.setImageResource(R.drawable.sub_g_star_btn)
             }
             TimerState.Alarm ->{
                 fab_play.isEnabled = false
                 fab_stop.isEnabled = true
+                fab_setting.isEnabled = false
                 fab_play.setImageResource(R.drawable.ic_play)
                 background_timer.setImageResource( R.drawable.sub_g_alarm )
             }
         }
     }
 
+    private fun disableButtons() {
+        fab_play.isEnabled = false
+        fab_stop.isEnabled = false
+        fab_setting.isEnabled = false
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

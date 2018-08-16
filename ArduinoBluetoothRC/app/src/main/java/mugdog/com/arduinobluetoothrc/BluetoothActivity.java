@@ -256,19 +256,6 @@ public class BluetoothActivity extends AppCompatActivity {
 
         sHandle = junBT.new staticHandler();
 
-        if(BTAdapter == null){
-            //Toast.makeText(getBaseContext(), "Can not use Bluetooth.", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
-
-        if(!BTAdapter.isEnabled()){
-            Intent it = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(it, REQUEST_ENABLE_BT);
-        }else{
-            findBluetoothDevices();
-            updateBTDevices();
-        }
 
         //  portrait screen
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -308,6 +295,22 @@ public class BluetoothActivity extends AppCompatActivity {
             sp.edit().putString("isShortcut", "exist").commit();
         }
         */
+        if(BTAdapter == null){
+            isVirtual = true;
+            Intent it = new Intent(this, ModeActivity.class);
+            startActivity(it);
+            Toast.makeText(getBaseContext(), "Can not use a Bluetooth device.\n   Virtual BT Mode On", Toast.LENGTH_LONG).show();
+//            finish();
+            return;
+        }
+
+        if(!BTAdapter.isEnabled()){
+            Intent it = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(it, REQUEST_ENABLE_BT);
+        }else{
+            findBluetoothDevices();
+            updateBTDevices();
+        }
 
     }
 

@@ -35,6 +35,7 @@ public class ControllerActivity extends AppCompatActivity {
     Vibrator    vib;
     private final int vib_time = 50;
 
+    public boolean isVibration = true;
     public String keyUp = "u", keyDown = "d", keyLeft = "l", keyRight = "r",
             keyX = "x", keyO = "o", keyT = "t", keyQ = "q", keyStart = "s", keySelect = "e";
 
@@ -96,7 +97,8 @@ public class ControllerActivity extends AppCompatActivity {
                   try{
                       switch(event.getAction()){
                           case MotionEvent.ACTION_DOWN:
-                              vib.vibrate(vib_time);
+                              if(isVibration)
+                                  vib.vibrate(vib_time);
                               if(R.id.btDown == id){
                                   activityBT.sendBT(keyDown);
                               }
@@ -196,6 +198,7 @@ public class ControllerActivity extends AppCompatActivity {
         keyQ = spf.getString(rc.getString(R.string.key_Q), "q");
         keySelect = spf.getString(rc.getString(R.string.key_Select), "e");
         keyStart = spf.getString(rc.getString(R.string.key_Start), "s");
+        isVibration = spf.getBoolean(rc.getString(R.string.key_Vibration), true);
     }
     public void storeKeySettings(){
         Resources rc = getResources();
@@ -213,7 +216,8 @@ public class ControllerActivity extends AppCompatActivity {
         ed.putString(rc.getString(R.string.key_Q), keyQ);
         ed.putString(rc.getString(R.string.key_Select), keySelect);
         ed.putString(rc.getString(R.string.key_Start), keyStart);
+        ed.putBoolean(rc.getString(R.string.key_Vibration), isVibration);
 
-        ed.commit();
+        ed.apply();
     }
 }

@@ -22,6 +22,18 @@ class PrefUtil{
             editor.apply()
         }
 
+        private const val TIMER_NAME_ID = "com.mugdog.nicetimer.timer_name"
+
+        fun getTimerName(context: Context): String{
+            val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+            return preferences.getString(TIMER_NAME_ID, "")
+        }
+
+        fun setTimerName(name: String, context: Context){
+            val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
+            editor.putString(TIMER_NAME_ID, name)
+            editor.apply()
+        }
         private const val TIMER_STATE_ID = "com.mugdog.nicetimer.timer_state"
 
         fun getTimerState(context: Context) : TimerActivity.TimerState{
