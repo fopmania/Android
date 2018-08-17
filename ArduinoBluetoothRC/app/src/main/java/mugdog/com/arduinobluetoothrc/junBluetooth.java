@@ -85,9 +85,10 @@ public class junBluetooth {
             while(!Thread.currentThread().interrupted()){
                 try {
                     bytes = this.inStream.available();
+                    bytes = bytes > 1023 ? 1023 : bytes;
                     if(bytes != 0){
                         SystemClock.sleep(100);
-                        bytes = inStream.read(buffer, 0, bytes);
+                        bytes = inStream.read(buffer, 0, bytes );
                         sHandler.obtainMessage(MESSAGE_READ, bytes, -1, buffer).sendToTarget();
                     }
                 } catch (IOException e) {

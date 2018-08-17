@@ -72,21 +72,21 @@ public class BluetoothActivity extends AppCompatActivity {
     public static BluetoothActivity getInstance()   {   return _instance;    }
 
     public void sendBT(String msg) throws IOException {
-        if(isVirtual)   return;
+        if(BTThread == null || isVirtual)   return;
         BTThread.write(msg);
     }
     public void sendBT(byte ch) throws IOException {
-        if(isVirtual)   return;
+        if(BTThread == null || isVirtual)   return;
         BTThread.write(ch);
     }
 
     public void setReadBT(EditText et){
-        if(isVirtual)   return;
+        if(BTThread == null || isVirtual)   return;
         sHandle.setEditText(et);
     }
     public void destroyBTThread() throws IOException
     {
-        if(isVirtual)   return;
+        if(BTThread == null || isVirtual)   return;
         BTThread.closeSocket();
         BTThread.interrupt();
     }
