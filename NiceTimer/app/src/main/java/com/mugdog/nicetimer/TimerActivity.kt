@@ -7,8 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
-import android.media.Ringtone
-import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -21,11 +19,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.ListView
 import com.github.aakira.expandablelayout.ExpandableLayoutListener
 import com.mugdog.nicetimer.dapters.TimerAdapter
 import com.mugdog.nicetimer.model.DBHelper
 import com.mugdog.nicetimer.model.NTimer
+import com.mugdog.nicetimer.service.RingtoneService
 import com.mugdog.nicetimer.util.NotificationUtil
 import com.mugdog.nicetimer.util.PrefUtil
 import com.mugdog.nicetimer.util.TimerUtil
@@ -45,6 +43,13 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
         setPreviousTimerLength();
         updateCountdownUI()
         background_timer.setImageResource( R.drawable.sub_g_star_btn )
+
+        if(lyTimeListView.isExpanded){
+            disableButtons()
+            tv_countdown.isEnabled = false
+            background_timer.isEnabled = false
+        }
+
     }
 
     init{
@@ -59,15 +64,11 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
         }
 
         fun playRingtone() {
-            if(instance == null)    return
-            if(instance?.ringtone!!.isPlaying)   return
-            instance?.ringtone!!.play()
-            instance?.background_timer!!.setImageResource(R.drawable.sub_g_alarm)
+            instance?.setPlayRingtone(true)
         }
 
         fun stopRingtone() {
-            if(instance?.ringtone!!.isPlaying)
-                instance?.ringtone!!.stop()
+            instance?.setPlayRingtone(false)
         }
 
 
@@ -93,12 +94,12 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.cancel(pendingIntent)
             PrefUtil.setAlarmSetTime(0, context)
+            stopRingtone()
         }
 
         fun setTimerInfo(name: String, seconds: Float) {
             instance?.setTimerName(name, seconds)
         }
-
 
         val nowSeconds: Long
             get() = Calendar.getInstance().timeInMillis
@@ -110,7 +111,7 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
         Stopped, Paused, Running, Alarm
     }
 
-    private lateinit var ringtone : Ringtone
+//    private lateinit var ringtone : Ringtone
     private var cdtimer: CountDownTimer? = null
     private var timerName = ""
     private var timerLengthSeconds = 0f
@@ -128,7 +129,6 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
         setSupportActionBar(toolbar)
         supportActionBar?.setIcon(R.mipmap.ic_launcher)
         supportActionBar?.title = "  Nice Timer"
-        supportActionBar?.title
 
 
         progress_countdown.isSeekModeEnabled = false
@@ -213,28 +213,24 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
                 etCurName?.setText(timerName)
                 tvCurTime?.text = TimerUtil.getTimeStringHHMMSS(timerLengthSeconds)
                 disableButtons()
+                tv_countdown.isEnabled = false
+                background_timer.isEnabled = false
 //                resizeTimerListView()
                 applyDB()
             }
 
             override fun onPreClose() {
                 updateButtons()
+                tv_countdown.isEnabled = true
+                background_timer.isEnabled = true
                 hideKeyboard(lvHistory)
             }
 
         })
-        val rtUri = RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_RINGTONE)
-        ringtone = RingtoneManager.getRingtone(this, rtUri)
+//        val rtUri = RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_RINGTONE)
+//        ringtone = RingtoneManager.getRingtone(this, rtUri)
 
-
-
-//        listTimer += NTimer(0, "Kitchin", 65.0f)
-//        listTimer += NTimer(0, "Egg", 165.0f)
-//        listTimer += NTimer(0, "Rice", 35.0f)
-//        listTimer += NTimer(0, "Egg", 165.0f)
-//        listTimer += NTimer(0, "Egg", 165.0f)
-//        listTimer += NTimer(0, "Egg", 165.0f)
-//        listTimer += NTimer(0, "Egg", 165.0f)
+//        val isPlay = ringtone.isPlaying
 
         tAdapter = TimerAdapter(this, R.layout.lv_history, listTimer)
         lvHistory.adapter = tAdapter
@@ -248,12 +244,37 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
             dbh.insertData(nt)
             applyDB()
         }
+
+        tvCurTime.setOnLongClickListener {
+            setCountTimer()
+            false;
+        }
+
 //        btDelete.setOnClickListener{
 //            val nt = NTimer(0, etCurName.text.toString(), timerLengthSeconds)
 //            dbh.insertData(nt)
 //            applyDB()
 //        }
     }
+
+    fun setPlayRingtone( play : Boolean){
+
+        if(play){
+            val it = Intent(applicationContext, RingtoneService::class.java)
+            startService(it)
+
+//            if(!ringtone.isPlaying)
+//                ringtone.play()
+            instance?.background_timer!!.setImageResource(R.drawable.sub_g_alarm)
+        }
+        else{
+            val it = Intent(applicationContext, RingtoneService::class.java)
+            stopService(it)
+//            ringtone.stop()
+            instance?.background_timer!!.setImageResource(R.drawable.sub_g_star_btn)
+        }
+    }
+
 
     fun hideKeyboard(view: View) {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -525,6 +546,7 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
 
         btTimeList.text = tn
         tv_countdown.text = getTimeString(secondsRemaining)
+        tvCurTime.text = TimerUtil.getTimeStringHHMMSS(secondsRemaining)
         progress_countdown.setValue((timerLengthSeconds - secondsRemaining)*10)
     }
 
@@ -608,6 +630,13 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
+        super.onSaveInstanceState(outState, outPersistentState)
+    }
 
     override fun onDestroy() {
         super.onDestroy()

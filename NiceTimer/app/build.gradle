@@ -10,8 +10,8 @@ android {
         applicationId "com.mugdog.nicetimer"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 3
-        versionName "NT v1.02"
+        versionCode 5
+        versionName "NT v1.03a"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
