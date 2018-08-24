@@ -81,7 +81,7 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
     public void setReadBT(EditText et){
-        if(BTThread == null || isVirtual)   return;
+        if(sHandle == null || isVirtual)   return;
         sHandle.setEditText(et);
     }
     public void destroyBTThread() throws IOException
