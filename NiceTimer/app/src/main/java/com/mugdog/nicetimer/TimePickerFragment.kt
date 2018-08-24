@@ -2,6 +2,7 @@ package com.mugdog.nicetimer
 
 import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import com.ikovac.timepickerwithseconds.TimePicker
@@ -44,6 +45,11 @@ class TimePickerFragment : DialogFragment(), TimePickerwithSecondsDialog.OnTimeS
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int, seconds: Int) {
         mListener.onSetTimer(name_time, (hourOfDay*3600 + minute*60 + seconds).toFloat())
+    }
+
+    override fun onCancel(dialog: DialogInterface?) {
+
+        super.onCancel(dialog)
     }
 
 
