@@ -1,18 +1,30 @@
 package mugdog.com.arduinobluetoothrc;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
+import android.inputmethodservice.Keyboard;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.text.method.DigitsKeyListener;
 import android.text.method.ScrollingMovementMethod;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -21,11 +33,21 @@ import com.google.android.gms.ads.AdView;
 
 import java.io.IOException;
 
+import mugdog.com.arduinobluetoothrc.keyboard.CustomEditTextFormatter;
+import mugdog.com.arduinobluetoothrc.keyboard.CustomKeyboard;
+import mugdog.com.arduinobluetoothrc.keyboard.CustomKeyboard2;
+
 
 public class TerminalActivity extends AppCompatActivity {
 
-    EditText txtCmd, etMonitor;
+
+    CheckBox cbHex;
+    EditText txtCmd;
+    EditText etMonitor;
     BluetoothActivity activityBT;
+
+    CustomKeyboard mCustomKeyboard;
+//    CustomKeyboard2 mCustomKeyboard;
 
 
     @Override
@@ -42,61 +64,35 @@ public class TerminalActivity extends AppCompatActivity {
         setTitle("Terminal");
 
         txtCmd = (EditText)findViewById(R.id.txtCmd);
-        etMonitor = (EditText)findViewById(R.id.etMonitor);
+        etMonitor = (EditText) findViewById(R.id.etMonitor);
         etMonitor.setVerticalScrollBarEnabled(true);
         //  add scrollbar in Monitor EditText
         etMonitor.setMovementMethod(new ScrollingMovementMethod());
 
 
-//        btSend.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(txtCmd.getText().length() > 0){
-//                    String msg = txtCmd.getText().toString();
-//                    etMonitor.append(msg+"\n");
-//                    txtCmd.setText("");
-//                    try {
-//                        activityBT.sendBT(msg);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        });
-
         txtCmd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == EditorInfo.IME_ACTION_DONE){
+                if(actionId == EditorInfo.IME_ACTION_DONE
+                        || event.getKeyCode() == KeyEvent.KEYCODE_ENTER
+                        ){
                     if(txtCmd.getText().length() > 0){
-                        String msg = txtCmd.getText().toString();
-                        etMonitor.append("\n"+"> "+ msg);
-                        txtCmd.setText("");
-                        try {
-                            activityBT.sendBT(msg);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        sendCommand(txtCmd.getText().toString(), cbHex.isChecked());
                     }
                     return true;
                 }
-
                 return false;
             }
         });
 
-//        ShapeDrawable shape = new ShapeDrawable(new RectShape());
-//        shape.getPaint().setColor(Color.DKGRAY);
-//        shape.getPaint().setStyle(Paint.Style.STROKE);
-//        shape.getPaint().setStrokeWidth(3);
-//        etMonitor.setBackground(shape);
-//
-//        ShapeDrawable shape2 = new ShapeDrawable(new RectShape());
-//        shape2.getPaint().setColor(Color.LTGRAY);
-//        shape2.getPaint().setStyle(Paint.Style.STROKE);
-//        shape2.getPaint().setStrokeWidth(3);
-//        txtCmd.setBackground(shape2);
 
+        mCustomKeyboard = new CustomKeyboard(this, R.id.keyboardview, R.xml.hex_keyboard );
+//        mCustomKeyboard = new CustomKeyboard(this, R.id.flKeyboard, R.xml.hexkbd );
+
+//        mCustomKeyboard = new CustomKeyboard2(this );
+
+//        mCustomKeyboard.attachToEditText(txtCmd, R.xml.keyboard_hexadecimal);
+//        CustomEditTextFormatter.attachToEditText(txtCmd, 4, "", 4);
 
         AdView adView = (AdView)findViewById(R.id.adViewTerminal);
         AdRequest adR = new AdRequest.Builder()
@@ -106,9 +102,48 @@ public class TerminalActivity extends AppCompatActivity {
 
 
         activityBT = BluetoothActivity.getInstance();
-        activityBT.setReadBT(etMonitor);
+        if(activityBT != null)
+            activityBT.setReadBT(etMonitor);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        cbHex = (CheckBox)findViewById(R.id.cbHex);
+        cbHex.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                assert imm != null;
+                imm.hideSoftInputFromWindow(txtCmd.getWindowToken(), 0);
+                if(isChecked){
+                    mCustomKeyboard.registerEditText(R.id.txtCmd);
+//                    txtCmd.requestFocus();
+                }
+                else{
+                    mCustomKeyboard.unregisterEditText(R.id.txtCmd);
+                    mCustomKeyboard.hideCustomKeyboard();
+                    txtCmd.setKeyListener(new EditText(getApplicationContext()).getKeyListener());
+//                    txtCmd.requestFocus();
+                }
+                txtCmd.setText("");
+                txtCmd.clearFocus();
+
+                Resources rc = getResources();
+                SharedPreferences spf = getSharedPreferences(rc.getString(R.string.terminal_preference_name), MODE_PRIVATE);
+                spf.edit().putBoolean(rc.getString(R.string.hex_terminal), isChecked).apply();
+
+            }
+        });
+
+//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
+        readSetting();
+
+    }
+
+    private void readSetting(){
+        Resources rc = getResources();
+        SharedPreferences spf = getSharedPreferences(rc.getString(R.string.terminal_preference_name), MODE_PRIVATE);
+        cbHex.setChecked(spf.getBoolean(rc.getString(R.string.hex_terminal), false));
     }
 
     @Override
@@ -133,5 +168,29 @@ public class TerminalActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mCustomKeyboard == null)
+            super.onBackPressed();
+        else
+            if( mCustomKeyboard.isCustomKeyboardVisible() ) mCustomKeyboard.hideCustomKeyboard(); else this.finish();
+    }
+
+    public void sendCommand(String msg, boolean isHex){
+        if(isHex){
+            etMonitor.append("\n"+"0x> "+ msg);
+        }
+        else{
+            etMonitor.append("\n"+"> "+ msg);
+        }
+
+        txtCmd.setText("");
+        try {
+            activityBT.sendBT(msg, isHex);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -12,13 +12,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
+import java.math.BigInteger;
 
 public class junBluetooth {
     public final static int MESSAGE_READ       = 2;
     public final static int CONNECTING_STATUS  = 3;
 
     public class staticHandler extends Handler {
-        private EditText etMsg = null;
+        private TextView etMsg = null;
 
 //        private final WeakReference<BluetoothActivity> btActivity;
 //
@@ -26,7 +27,7 @@ public class junBluetooth {
 //            this.btActivity = new WeakReference<BluetoothActivity>(btActivity);
 //        }
 
-        public void setEditText(EditText et){
+        public void setEditText(TextView et){
             etMsg = et;
         }
 
@@ -97,9 +98,32 @@ public class junBluetooth {
             }
         }
 
+        public byte[] hexStringToByteArray(String s) {
+            int len = s.length();
+            if(len%2 != 0){
+                s += "0";
+            }
+            byte[] data = new byte[len / 2];
+            for (int i = 0; i < len; i += 2) {
+                data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                        + Character.digit(s.charAt(i+1), 16));
+            }
+            return data;
+        }
+
         public void write(String Msg) throws IOException {
             outStream.write(Msg.getBytes());
         }
+
+        public void write(String Msg, boolean isHex) throws IOException {
+            if(isHex){
+                byte [] arrHex = hexStringToByteArray(Msg);
+                outStream.write(arrHex);
+            }else{
+                outStream.write(Msg.getBytes());
+            }
+        }
+
         public void write(byte Msg) throws IOException {
             outStream.write(Msg);
         }

@@ -75,12 +75,18 @@ public class BluetoothActivity extends AppCompatActivity {
         if(BTThread == null || isVirtual)   return;
         BTThread.write(msg);
     }
+
+    public void sendBT(String msg, boolean isHex) throws IOException {
+        if(BTThread == null || isVirtual)   return;
+        BTThread.write(msg, isHex);
+    }
+
     public void sendBT(byte ch) throws IOException {
         if(BTThread == null || isVirtual)   return;
         BTThread.write(ch);
     }
 
-    public void setReadBT(EditText et){
+    public void setReadBT(TextView et){
         if(sHandle == null || isVirtual)   return;
         sHandle.setEditText(et);
     }

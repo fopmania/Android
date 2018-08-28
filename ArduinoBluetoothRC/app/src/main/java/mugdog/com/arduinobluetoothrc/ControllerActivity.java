@@ -30,6 +30,8 @@ public class ControllerActivity extends AppCompatActivity {
 
     BluetoothActivity activityBT;
 
+    private Toast mToast = null;
+
     static ControllerActivity _instance = null;
 
     Vibrator    vib;
@@ -58,6 +60,9 @@ public class ControllerActivity extends AppCompatActivity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
+
+        mToast = Toast.makeText(getBaseContext(), "", Toast.LENGTH_SHORT);
+
         vib = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 
         makeTouchEvent(R.id.btDown);
@@ -72,7 +77,8 @@ public class ControllerActivity extends AppCompatActivity {
         makeTouchEvent(R.id.btStart);
 
         activityBT = BluetoothActivity.getInstance();
-        activityBT.setReadBT(null);
+        if(activityBT != null)
+            activityBT.setReadBT(null);
 
         readKeySettings();
 
@@ -94,52 +100,64 @@ public class ControllerActivity extends AppCompatActivity {
               @Override
               public boolean onTouch(View v, MotionEvent event) {
                   int id = v.getId();
+                  boolean r = false;
+                  String pKey = "";
                   try{
                       switch(event.getAction()){
                           case MotionEvent.ACTION_DOWN:
                               if(isVibration)
                                   vib.vibrate(vib_time);
                               if(R.id.btDown == id){
-                                  activityBT.sendBT(keyDown);
+                                  pKey = keyDown;
                               }
                               else if(R.id.btUp == id){
-                                  activityBT.sendBT(keyUp);
+                                  pKey = keyUp;
                               }
                               else if(R.id.btLeft == id){
-                                  activityBT.sendBT(keyLeft);
+                                  pKey = keyLeft;
                               }
                               else if(R.id.btRight == id){
-                                  activityBT.sendBT(keyRight);
+                                  pKey = keyRight;
                               }
                               else if(R.id.btT == id){
-                                  activityBT.sendBT(keyT);
+                                  pKey = keyT;
                               }
                               else if(R.id.btO == id){
-                                  activityBT.sendBT(keyO);
+                                  pKey = keyO;
                               }
                               else if(R.id.btQ == id){
-                                  activityBT.sendBT(keyQ);
+                                  pKey = keyQ;
                               }
                               else if(R.id.btX == id){
-                                  activityBT.sendBT(keyX);
+                                  pKey = keyX;
                               }
                               else if(R.id.btSelect == id){
-                                  activityBT.sendBT(keySelect);
+                                  pKey = keySelect;
                               }
                               else if(R.id.btStart == id){
-                                  activityBT.sendBT(keyStart);
+                                  pKey = keyStart;
                               }
+                              r = true;
+                              break;
 
-                              return true;
                           case MotionEvent.ACTION_UP:
-                              activityBT.sendBT("0");
-                              return false;
+                              pKey = "0";
+                              r = false;
+                              break;
 
                       }
+
+                      if(!pKey.isEmpty()){
+                          activityBT.sendBT(pKey);
+                          mToast.cancel();
+                          mToast = Toast.makeText(getBaseContext(), pKey, Toast.LENGTH_SHORT);
+                          mToast.show();
+                      }
+
                   }catch (IOException e) {
                       e.printStackTrace();
                   }
-                  return false;
+                  return r;
               }
           }
         );

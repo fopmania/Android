@@ -24,6 +24,9 @@
     <string name="hexa_byte">hexabyte</string>
     <string name="progress">progress</string>
 
+    <string name="terminal_preference_name">Terminal preferences</string>
+    <string name="hex_terminal">hexterminal</string>
+
     <string name="switch_preference_name">Switch preferences</string>
     <string name="switch_on">Switch On</string>
 </resources>

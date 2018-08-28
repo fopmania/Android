@@ -29,6 +29,7 @@ import java.io.IOException;
 public class SwitchActivity extends AppCompatActivity {
     ConstraintLayout lyBack;
     private AdView mAdView;
+    private Toast  mToast = null;
 
     Switch swButton;
     TextView tvSwitchText;
@@ -48,6 +49,7 @@ public class SwitchActivity extends AppCompatActivity {
         setTitle("Switch");
 
 
+        mToast = Toast.makeText(getBaseContext(), "", Toast.LENGTH_SHORT);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -72,16 +74,20 @@ public class SwitchActivity extends AppCompatActivity {
                 } catch (IOException e) {
                         e.printStackTrace();
                 }
+                mToast.cancel();
+                mToast = Toast.makeText(getBaseContext(), chk, Toast.LENGTH_SHORT);
+                mToast.show();
+//                Toast.makeText(getBaseContext(), chk, Toast.LENGTH_SHORT).show();
 
                 storeSettings();
-                Toast.makeText(getBaseContext(), chk, Toast.LENGTH_SHORT).show();
             }
         });
 
         tvSwitchText = (TextView)findViewById(R.id.tvSwitchText);
 
         activityBT = BluetoothActivity.getInstance();
-        activityBT.setReadBT(null);
+        if(activityBT != null)
+            activityBT.setReadBT(null);
 
         lyBack = ((ConstraintLayout)findViewById(R.id.lySwitch));
         if(lyBack.getBackground() instanceof ColorDrawable){

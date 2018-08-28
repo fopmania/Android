@@ -29,6 +29,7 @@ import java.io.IOException;
 
 public class DimmerActivity extends AppCompatActivity {
     private AdView mAdView;
+    private Toast  mToast;
 
     ConstraintLayout lyBack;
     CheckBox cbVertical, cbHexaByte;
@@ -61,12 +62,12 @@ public class DimmerActivity extends AppCompatActivity {
                 } else {
                     sbDimmer.setRotation(0);
                 }
-
-                Resources rc = getResources();
-                SharedPreferences spf = getSharedPreferences(rc.getString(R.string.dimmer_preference_name), MODE_PRIVATE);
-                spf.edit().putBoolean(rc.getString(R.string.vertical), isChecked).commit();
+                storeSettings();
             }
         });
+
+        mToast = Toast.makeText(getBaseContext(), "", Toast.LENGTH_SHORT);
+
 
         cbHexaByte = (CheckBox) findViewById(R.id.cbHexaByte);
         cbHexaByte.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -81,9 +82,7 @@ public class DimmerActivity extends AppCompatActivity {
                 }
                 int cl = ColorUtil.lighten(colorBackground, (double)sbDimmer.getProgress()/sbDimmer.getMax());
                 lyBack.setBackgroundColor(cl);
-                Resources rc = getResources();
-                SharedPreferences spf = getSharedPreferences(rc.getString(R.string.dimmer_preference_name), MODE_PRIVATE);
-                spf.edit().putBoolean(rc.getString(R.string.hexa_byte), isChecked).commit();
+                storeSettings();
             }
         });
 
@@ -110,15 +109,17 @@ public class DimmerActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 int v = sbDimmer.getProgress();
-                Toast.makeText(getBaseContext(), Integer.toString(v), Toast.LENGTH_SHORT).show();
-                Resources rc = getResources();
-                SharedPreferences spf = getSharedPreferences(rc.getString(R.string.dimmer_preference_name), MODE_PRIVATE);
-                spf.edit().putInt(rc.getString(R.string.progress), sbDimmer.getProgress()).commit();
+                mToast.cancel();
+                mToast = Toast.makeText(getBaseContext(), Integer.toString(v), Toast.LENGTH_SHORT);
+                mToast.show();
+
+                storeSettings();
             }
         });
 
         activityBT = BluetoothActivity.getInstance();
-        activityBT.setReadBT(null);
+        if(activityBT != null)
+            activityBT.setReadBT(null);
 
         lyBack = (ConstraintLayout)findViewById(R.id.lyDimmer);
         if( lyBack.getBackground() instanceof ColorDrawable)
@@ -150,12 +151,12 @@ public class DimmerActivity extends AppCompatActivity {
 
     }
 
-    public void storeSettings() {
+    private void storeSettings() {
         Resources rc = getResources();
         SharedPreferences spf = getSharedPreferences(rc.getString(R.string.dimmer_preference_name), MODE_PRIVATE);
-        spf.edit().putBoolean(rc.getString(R.string.hexa_byte), cbHexaByte.isChecked()).commit();
-        spf.edit().putBoolean(rc.getString(R.string.vertical), cbVertical.isChecked()).commit();
-        spf.edit().putInt(rc.getString(R.string.progress), sbDimmer.getProgress()).commit();
+        spf.edit().putBoolean(rc.getString(R.string.hexa_byte), cbHexaByte.isChecked()).apply();
+        spf.edit().putBoolean(rc.getString(R.string.vertical), cbVertical.isChecked()).apply();
+        spf.edit().putInt(rc.getString(R.string.progress), sbDimmer.getProgress()).apply();
     }
 
     @Override

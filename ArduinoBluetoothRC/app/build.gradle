@@ -6,8 +6,8 @@ android {
         applicationId "mugdog.com.arduinobluetoothrc"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 11
-        versionName "ABRC v1.03b"
+        versionCode 13
+        versionName "ABRC v1.04a"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
