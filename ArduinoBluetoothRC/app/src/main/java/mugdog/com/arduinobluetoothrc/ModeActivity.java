@@ -67,7 +67,10 @@ public class ModeActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         try {
-            BluetoothActivity.getInstance().destroyBTThread();
+            BluetoothActivity bai = BluetoothActivity.getInstance();
+            if(bai != null){
+                bai.destroyBTThread();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

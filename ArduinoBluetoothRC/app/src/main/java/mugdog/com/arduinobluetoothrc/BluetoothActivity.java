@@ -66,7 +66,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
     private final static int REQUEST_ENABLE_BT  = 104;
 
-    private static BluetoothActivity _instance;
+    private static BluetoothActivity _instance = null;
 
 
     public static BluetoothActivity getInstance()   {   return _instance;    }
