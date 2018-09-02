@@ -18,12 +18,12 @@ class RingtoneService : Service() {
         val rtUri = RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_RINGTONE)
         this.ringtone = RingtoneManager.getRingtone(this, rtUri)
 
-        this.ringtone!!.play()
+        this.ringtone?.play()
 
         return START_NOT_STICKY
     }
 
     override fun onDestroy() {
-        this.ringtone!!.stop()
+        this.ringtone?.stop()
     }
 }

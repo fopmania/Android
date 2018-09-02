@@ -1,6 +1,5 @@
 package com.mugdog.nicetimer
 
-import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -17,21 +16,22 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.github.aakira.expandablelayout.ExpandableLayoutListener
-import com.mugdog.nicetimer.dapters.TimerAdapter
+import com.mugdog.nicetimer.adapters.TimerAdapter
 import com.mugdog.nicetimer.model.DBHelper
 import com.mugdog.nicetimer.model.NTimer
 import com.mugdog.nicetimer.service.RingtoneService
-import com.mugdog.nicetimer.util.NotificationUtil
-import com.mugdog.nicetimer.util.PrefUtil
-import com.mugdog.nicetimer.util.TimerUtil
 
 import kotlinx.android.synthetic.main.activity_timer.*
 import kotlinx.android.synthetic.main.content_timer.*
 import java.util.*
 import kotlin.math.min
+import android.text.method.Touch.onTouchEvent
+import android.widget.Toast
+import com.mugdog.nicetimer.util.*
 
 
 class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener {
@@ -255,6 +255,21 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
 //            dbh.insertData(nt)
 //            applyDB()
 //        }
+
+        btTimeList.setOnTouchListener(object: OnSwipeTouchListener(applicationContext()) {
+            override fun onSwipeBottom(){
+                lyTimeListView.expand()
+            }
+        })
+
+        lvHistory.setOnTouchListener(object: OnSwipeTouchListener(applicationContext()) {
+            override fun onSwipeTop(){
+                lyTimeListView.collapse()
+            }
+        })
+
+
+
     }
 
     fun setPlayRingtone( play : Boolean){
@@ -641,5 +656,6 @@ class TimerActivity : AppCompatActivity(), TimePickerFragment.onSetTimerListener
     override fun onDestroy() {
         super.onDestroy()
     }
+
 
 }
