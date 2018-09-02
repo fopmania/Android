@@ -34,7 +34,7 @@ public class DimmerActivity extends AppCompatActivity {
     ConstraintLayout lyBack;
     CheckBox cbVertical, cbHexaByte;
     SeekBar sbDimmer;
-    BluetoothActivity activityBT;
+//    BluetoothActivity activityBT;
     int colorBackground = Color.TRANSPARENT;
 
     @Override
@@ -91,12 +91,16 @@ public class DimmerActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 try {
                     if (cbHexaByte.isChecked()) {
-                        activityBT.sendBT((byte) progress);
+                        BluetoothActivity.sendBT((byte) progress);
                     } else {
-                        activityBT.sendBT(Integer.toString(progress));
+                        BluetoothActivity.sendBT(Integer.toString(progress));
                     }
                     int cl = ColorUtil.lighten(colorBackground, (double)sbDimmer.getProgress()/sbDimmer.getMax());
                     lyBack.setBackgroundColor(cl);
+                    mToast.cancel();
+                    mToast = Toast.makeText(getBaseContext(), Integer.toString(progress), Toast.LENGTH_SHORT);
+                    mToast.show();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -108,18 +112,11 @@ public class DimmerActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                int v = sbDimmer.getProgress();
-                mToast.cancel();
-                mToast = Toast.makeText(getBaseContext(), Integer.toString(v), Toast.LENGTH_SHORT);
-                mToast.show();
-
                 storeSettings();
             }
         });
 
-        activityBT = BluetoothActivity.getInstance();
-        if(activityBT != null)
-            activityBT.setReadBT(null);
+        BluetoothActivity.setReadBT(null);
 
         lyBack = (ConstraintLayout)findViewById(R.id.lyDimmer);
         if( lyBack.getBackground() instanceof ColorDrawable)

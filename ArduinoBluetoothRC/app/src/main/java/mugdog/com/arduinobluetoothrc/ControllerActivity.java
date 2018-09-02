@@ -28,7 +28,7 @@ import java.io.IOException;
 
 public class ControllerActivity extends AppCompatActivity {
 
-    BluetoothActivity activityBT;
+//    BluetoothActivity activityBT;
 
     private Toast mToast = null;
 
@@ -76,9 +76,9 @@ public class ControllerActivity extends AppCompatActivity {
         makeTouchEvent(R.id.btSelect);
         makeTouchEvent(R.id.btStart);
 
-        activityBT = BluetoothActivity.getInstance();
-        if(activityBT != null)
-            activityBT.setReadBT(null);
+//        activityBT = BluetoothActivity.getInstance();
+//        if(activityBT != null)
+        BluetoothActivity.setReadBT(null);
 
         readKeySettings();
 
@@ -148,7 +148,7 @@ public class ControllerActivity extends AppCompatActivity {
                       }
 
                       if(!pKey.isEmpty()){
-                          activityBT.sendBT(pKey);
+                          BluetoothActivity.sendBT(pKey);
                           mToast.cancel();
                           mToast = Toast.makeText(getBaseContext(), pKey, Toast.LENGTH_SHORT);
                           mToast.show();

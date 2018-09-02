@@ -47,16 +47,16 @@ import java.util.UUID;
 
 public class BluetoothActivity extends AppCompatActivity {
 
-    public boolean isVirtual = false;
+    public static boolean isVirtual = false;
     public static String version_name;
 
     private BluetoothAdapter        BTAdapter;
     private BluetoothSocket         BTSocket = null;
     private Set<BluetoothDevice>    BTDevices;
     private ArrayAdapter<String>    BTArrayAdapter;
-    private junBluetooth junBT;
-    private junBluetooth.staticHandler         sHandle;
-    private junBluetooth.ConnectThread         BTThread = null;
+    private static junBluetooth     junBT = null;
+    private static junBluetooth.staticHandler         sHandle = null;
+    private static junBluetooth.ConnectThread         BTThread = null;
     private ProgressBar pBar = null;
 
 
@@ -66,35 +66,33 @@ public class BluetoothActivity extends AppCompatActivity {
 
     private final static int REQUEST_ENABLE_BT  = 104;
 
-    private static BluetoothActivity _instance = null;
+//    private static BluetoothActivity _instance = null;
+//    public static BluetoothActivity getInstance()   {   return _instance;    }
 
-
-    public static BluetoothActivity getInstance()   {   return _instance;    }
-
-    public void sendBT(String msg) throws IOException {
-        if(BTThread == null || isVirtual)   return;
-        BTThread.write(msg);
+    public static void sendBT(String msg) throws IOException {
+        if(BluetoothActivity.BTThread == null || isVirtual)   return;
+        BluetoothActivity.BTThread.write(msg);
     }
 
-    public void sendBT(String msg, boolean isHex) throws IOException {
-        if(BTThread == null || isVirtual)   return;
-        BTThread.write(msg, isHex);
+    public static void sendBT(String msg, boolean isHex) throws IOException {
+        if(BluetoothActivity.BTThread == null || isVirtual)   return;
+        BluetoothActivity.BTThread.write(msg, isHex);
     }
 
-    public void sendBT(byte ch) throws IOException {
-        if(BTThread == null || isVirtual)   return;
-        BTThread.write(ch);
+    public static void sendBT(byte ch) throws IOException {
+        if(BluetoothActivity.BTThread == null || isVirtual)   return;
+        BluetoothActivity.BTThread.write(ch);
     }
 
-    public void setReadBT(TextView et){
-        if(sHandle == null || isVirtual)   return;
-        sHandle.setEditText(et);
+    public static void setReadBT(TextView et){
+        if(BluetoothActivity.sHandle == null || isVirtual)   return;
+        BluetoothActivity.sHandle.setEditText(et);
     }
-    public void destroyBTThread() throws IOException
+    public static void destroyBTThread() throws IOException
     {
-        if(BTThread == null || isVirtual)   return;
-        BTThread.closeSocket();
-        BTThread.interrupt();
+        if(BluetoothActivity.BTThread == null || isVirtual)   return;
+        BluetoothActivity.BTThread.closeSocket();
+        BluetoothActivity.BTThread.interrupt();
     }
 
 
@@ -162,7 +160,7 @@ public class BluetoothActivity extends AppCompatActivity {
                         pBarHandler.sendMessage(pBarHandler.obtainMessage());
                         try {
                             BTSocket.close();
-                            sHandle.obtainMessage(junBluetooth.CONNECTING_STATUS, -1, -1 ).sendToTarget();
+                            BluetoothActivity.sHandle.obtainMessage(junBluetooth.CONNECTING_STATUS, -1, -1 ).sendToTarget();
                         } catch (IOException e1) {
                             e1.printStackTrace();
                          //   Toast.makeText(getBaseContext(), "Socket create failed", Toast.LENGTH_SHORT).show();
@@ -171,8 +169,8 @@ public class BluetoothActivity extends AppCompatActivity {
                         //Toast.makeText(getBaseContext(), "Socket create failed", Toast.LENGTH_SHORT).show();
                     }
                     if(fail == false){
-                        BTThread = junBT.new ConnectThread(BTSocket, sHandle);
-                        BTThread.start();
+                        BluetoothActivity.BTThread = BluetoothActivity.junBT.new ConnectThread(BTSocket, BluetoothActivity.sHandle);
+                        BluetoothActivity.BTThread.start();
                         Intent it = new Intent(BluetoothActivity.this, ModeActivity.class);
                         startActivity(it);
                         //finish();
@@ -203,12 +201,12 @@ public class BluetoothActivity extends AppCompatActivity {
 
                 @Override
                 public void onFinish() {
-                    if(isExit || (BTThread != null && BTThread.isAlive()))      return;
+                    if(isExit || (BluetoothActivity.BTThread != null && BluetoothActivity.BTThread.isAlive()))      return;
                     try {
                         Toast.makeText(getBaseContext(), "Bluetooth connection failed.", Toast.LENGTH_SHORT).show();
                         th.interrupt();
                         BTSocket.close();
-                        sHandle.obtainMessage(junBluetooth.CONNECTING_STATUS, -1, -1 ).sendToTarget();
+                        BluetoothActivity.sHandle.obtainMessage(junBluetooth.CONNECTING_STATUS, -1, -1 ).sendToTarget();
                         pBarHandler.sendMessage(pBarHandler.obtainMessage());
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -258,9 +256,9 @@ public class BluetoothActivity extends AppCompatActivity {
         lvBT.setAdapter(BTArrayAdapter);
         lvBT.setOnItemClickListener(onClickListenerBT);
 
-        junBT = new junBluetooth();
+        BluetoothActivity.junBT = new junBluetooth();
 
-        sHandle = junBT.new staticHandler();
+        BluetoothActivity.sHandle = BluetoothActivity.junBT.new staticHandler();
 
 
         //  portrait screen
@@ -269,7 +267,7 @@ public class BluetoothActivity extends AppCompatActivity {
         //  keep the screen on
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        BluetoothActivity._instance = this;
+//        BluetoothActivity._instance = this;
 
         Context context = getApplicationContext();
         ComponentName name = new ComponentName(context, BluetoothActivity.class);
@@ -383,9 +381,10 @@ public class BluetoothActivity extends AppCompatActivity {
             if(brReceiver != null)
                 LocalBroadcastManager.getInstance(this).unregisterReceiver(brReceiver);
             try {
-                if(BTThread != null){
-                    BTThread.closeSocket();
-                    BTThread.interrupt();
+                if(BluetoothActivity.BTThread != null){
+                    BluetoothActivity.BTThread.closeSocket();
+                    BluetoothActivity.BTThread.interrupt();
+                    BluetoothActivity.BTThread = null;
                 }
             } catch (IOException e) {
                 e.printStackTrace();

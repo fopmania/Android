@@ -44,7 +44,7 @@ public class TerminalActivity extends AppCompatActivity {
     CheckBox cbHex;
     EditText txtCmd;
     EditText etMonitor;
-    BluetoothActivity activityBT;
+//    BluetoothActivity activityBT;
 
     CustomKeyboard mCustomKeyboard;
 //    CustomKeyboard2 mCustomKeyboard;
@@ -101,9 +101,9 @@ public class TerminalActivity extends AppCompatActivity {
         adView.loadAd(adR);
 
 
-        activityBT = BluetoothActivity.getInstance();
-        if(activityBT != null)
-            activityBT.setReadBT(etMonitor);
+//        activityBT = BluetoothActivity.getInstance();
+//        if(activityBT != null)
+        BluetoothActivity.setReadBT(etMonitor);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -188,7 +188,7 @@ public class TerminalActivity extends AppCompatActivity {
 
         txtCmd.setText("");
         try {
-            activityBT.sendBT(msg, isHex);
+            BluetoothActivity.sendBT(msg, isHex);
         } catch (IOException e) {
             e.printStackTrace();
         }

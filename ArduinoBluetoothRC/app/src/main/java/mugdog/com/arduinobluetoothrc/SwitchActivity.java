@@ -33,7 +33,7 @@ public class SwitchActivity extends AppCompatActivity {
 
     Switch swButton;
     TextView tvSwitchText;
-    BluetoothActivity activityBT;
+//    BluetoothActivity activityBT;
     int colorBackground = Color.TRANSPARENT;
 
     @Override
@@ -48,13 +48,15 @@ public class SwitchActivity extends AppCompatActivity {
         ab.setIcon(R.mipmap.ic_switch);
         setTitle("Switch");
 
+//        activityBT = BluetoothActivity.getInstance();
+//        if(activityBT != null)
+        BluetoothActivity.setReadBT(null);
 
         mToast = Toast.makeText(getBaseContext(), "", Toast.LENGTH_SHORT);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         swButton = (Switch)findViewById(R.id.swButton);
-
         swButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -70,7 +72,7 @@ public class SwitchActivity extends AppCompatActivity {
                     lyBack.setBackgroundColor(ColorUtil.lighten(colorBackground, 0));
                 }
                 try{
-                    activityBT.sendBT(chk);
+                    BluetoothActivity.sendBT(chk);
                 } catch (IOException e) {
                         e.printStackTrace();
                 }
@@ -85,9 +87,6 @@ public class SwitchActivity extends AppCompatActivity {
 
         tvSwitchText = (TextView)findViewById(R.id.tvSwitchText);
 
-        activityBT = BluetoothActivity.getInstance();
-        if(activityBT != null)
-            activityBT.setReadBT(null);
 
         lyBack = ((ConstraintLayout)findViewById(R.id.lySwitch));
         if(lyBack.getBackground() instanceof ColorDrawable){
